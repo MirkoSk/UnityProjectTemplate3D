@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.PostProcessing;
 
 /// <summary>
 /// Provides a Debug Mode Menu
@@ -11,11 +12,11 @@ public class DebugMode : SubscribedBehaviour {
     public static DebugMode Instance;
 
     private bool debugMode = false;
-
+    
 
 
     //Awake is always called before any Start functions
-    void Awake() {
+    private void Awake() {
         //Check if instance already exists
         if (Instance == null)
 
@@ -32,7 +33,7 @@ public class DebugMode : SubscribedBehaviour {
         DontDestroyOnLoad(gameObject);
     }
 
-    void Update () {
+    private void Update () {
         // Switch the Games Debug Mode On/Off
         if (Input.GetButtonDown(Constants.INPUT_DEBUGMODE)) {
             debugMode = !debugMode;

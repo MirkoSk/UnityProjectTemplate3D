@@ -1,9 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 /// <summary>
-/// Manages the overall flow of the game. This class is a singleton and won't be destroyed when loading a new scene.
+/// Manages the overall flow of the game and scene loading. This class is a singleton and won't be destroyed when loading a new scene.
 /// </summary>
 public class GameManager : SubscribedBehaviour {
 
@@ -41,6 +42,35 @@ public class GameManager : SubscribedBehaviour {
 
     #region Custom Event Functions
     // Every child of SubscribedBehaviour can implement these
+    #endregion
+
+
+
+    #region Public Functions
+    /// <summary>
+    /// Quits the application or exits play mode when in editor
+    /// </summary>
+    public void ExitGame() {
+        Debug.Log("Exiting the game.");
+        Application.Quit();
+
+        #if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+        #endif
+    }
+
+    /// <summary>
+    /// Loads the next scene in the build index
+    /// </summary>
+    public void LoadNextLevel() {
+        int activeScene = SceneManager.GetActiveScene().buildIndex;
+        if (activeScene + 1 < SceneManager.sceneCountInBuildSettings) {
+            SceneManager.LoadScene(activeScene + 1);
+        }
+        else {
+            Debug.LogError("No more levels in build index to be loaded.");
+        }
+    }
     #endregion
 
 
