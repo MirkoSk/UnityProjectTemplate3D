@@ -20,7 +20,10 @@ public class Constants
     public static readonly string TAG_PLAYER = "Player";
     #endregion
 
+    #region Scenes
+    public static readonly string SCENE_OPTIONS = "OptionsMenu";
+    #endregion
+
     #region Object References
-    // Character Components
     #endregion
 }
