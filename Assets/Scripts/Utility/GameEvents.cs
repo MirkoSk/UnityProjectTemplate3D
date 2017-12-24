@@ -11,14 +11,14 @@ public class GameEvents {
 
     // Create references for our delegates
     // This event is triggered when the player is free to move around
-    public static event GameEvent Exploration;
+    public static event GameEvent LevelCompleted;
 
 
 
     /// <summary>
     /// Helper Function to start the exploration mode from within other classes
     /// </summary>
-    public static void StartExploration() {
-        Exploration();
+    public static void StartLevelCompleted() {
+        LevelCompleted();
     }
 }

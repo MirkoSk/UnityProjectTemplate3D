@@ -49,8 +49,8 @@ public class PlayerController : SubscribedBehaviour
 
 
     #region Custom Event Functions
-    protected override void OnExploration() {
-        movable = true;
+    protected override void OnLevelCompleted() {
+        
     }
     #endregion
 

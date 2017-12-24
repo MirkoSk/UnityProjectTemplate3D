@@ -47,37 +47,7 @@ public class GameManager : SubscribedBehaviour {
 
 
     #region Public Functions
-    /// <summary>
-    /// Loads a scene by name
-    /// </summary>
-    public void LoadSceneByName(string name) {
-        SceneManager.LoadScene(name);
-    }
     
-    /// <summary>
-    /// Loads the next scene in the build index
-    /// </summary>
-    public void LoadNextScene() {
-        int activeScene = SceneManager.GetActiveScene().buildIndex;
-        if (activeScene + 1 < SceneManager.sceneCountInBuildSettings) {
-            SceneManager.LoadScene(activeScene + 1);
-        }
-        else {
-            Debug.LogError("No more levels in build index to be loaded.");
-        }
-    }
-
-    /// <summary>
-    /// Quits the application or exits play mode when in editor
-    /// </summary>
-    public void ExitGame() {
-        Debug.Log("Exiting the game.");
-        Application.Quit();
-
-#if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
-#endif
-    }
     #endregion
 
 

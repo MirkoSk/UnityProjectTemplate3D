@@ -15,15 +15,15 @@ public class Constants
     #endregion
 
     #region Tags and Layers
-    // Tags
-    public static readonly string TAG_NPC = "NPC";
-    public static readonly string TAG_PLAYER = "Player";
+    
     #endregion
 
     #region Scenes
     public static readonly string SCENE_OPTIONS = "OptionsMenu";
+    public static readonly string SCENE_MAIN_MENU = "MainMenu";
     #endregion
 
-    #region Object References
+    #region Sounds
+
     #endregion
 }
