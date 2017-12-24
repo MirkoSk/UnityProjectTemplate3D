@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Audio;
 
 /// <summary>
-/// Manages all 2D audio playing in the game. This class is a singleton and won't be destroyed when loading a new scene.
+/// Manages all 2D audio playing in the game. This class is a singleton and executes in edit mode
 /// </summary>
 [ExecuteInEditMode]
 public class AudioManager : SubscribedBehaviour {
