@@ -69,7 +69,7 @@ AudioMixerGroupController:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: Unassigned
+  m_Name: Default
   m_AudioMixer: {fileID: 24100000}
   m_GroupID: d9e0819c3492b274ab485b3a51fc99b2
   m_Children: []
