@@ -13,9 +13,9 @@ public class TransformEditor : Editor {
 
         Transform transform = (Transform)target;
 
-        EditorGUILayout.Vector3Field("Position", transform.position);
-        EditorGUILayout.Vector3Field("Rotation", transform.rotation.eulerAngles);
-        EditorGUILayout.Vector3Field("Scale", transform.localScale);
+        transform.position = EditorGUILayout.Vector3Field("Position", transform.position);
+        transform.rotation = Quaternion.Euler(EditorGUILayout.Vector3Field("Rotation", transform.rotation.eulerAngles));
+        transform.localScale = EditorGUILayout.Vector3Field("Scale", transform.localScale);
 
         if (GUILayout.Button("Reset Transform")) {
             transform.position = Vector3.zero;
