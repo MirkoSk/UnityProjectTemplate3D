@@ -12,7 +12,7 @@ public class AudioHQ : SubscribedBehaviour {
     #region Variable Declarations
     [SerializeField] AudioMixerGroup routingGroup;
     AudioClip[] audioClips;
-    List<AudioSource> audioSources;
+    List<AudioSource> audioSources = new List<AudioSource>();
 
     public static AudioHQ Instance;
     #endregion
@@ -34,7 +34,6 @@ public class AudioHQ : SubscribedBehaviour {
             Debug.LogError("There can only be one AudioHQ instantiated. Destroying this Instance...");
             DestroyImmediate(this);
         }
-        audioSources = new List<AudioSource>();
     }
 
     private void OnDisable() {
@@ -55,7 +54,9 @@ public class AudioHQ : SubscribedBehaviour {
     /// Returns an AudioSource by name. Returns null if "name" couldn't be found.
     /// </summary>
     public AudioSource GetAudioSource(string name) {
-        foreach (AudioSource src in audioSources) {
+        // Need to create a new array, because the audioSources list gets cleared when entering Play Mode
+        AudioSource[] sources = GetComponents<AudioSource>();
+        foreach (AudioSource src in sources) {
             if (src.clip != null && src.clip.name == name) {
                 return src;
             }

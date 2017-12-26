@@ -36,4 +36,44 @@ public static class ExtensionMethods {
     #endregion
 
 
+
+    #region AudioSource
+    /// <summary>
+    /// Plays the clip with a specified Fade-In time.
+    /// </summary>
+    /// <param name="fadeInTime">Length of the Fade-In in seconds</param>
+    public static void Play(this AudioSource source, float fadeInTime) {
+        float originalVolume = source.volume;
+        source.volume = 0f;
+        source.Play();
+        LeanTween.value(source.gameObject, (float f) => { source.volume = f; }, 0f, originalVolume, fadeInTime)
+                 .setEase(LeanTweenType.easeInOutQuad);
+    }
+
+    /// <summary>
+    /// Stops playing the clip with a specified Fade-Out time.
+    /// </summary>
+    /// <param name="fadeOutTime">Length of the Fade-Out in seconds</param>
+    public static void Stop(this AudioSource source, float fadeOutTime) {
+        float originalVolume = source.volume;
+        LeanTween.value(source.gameObject, (float f) => { source.volume = f; }, originalVolume, 0f, fadeOutTime)
+                 .setEase(LeanTweenType.easeInOutQuad)
+                 .setOnComplete(() => {
+                     source.Stop();
+                     source.volume = originalVolume;
+                 });
+    }
+    #endregion
+
+
+
+    #region Camera
+    public static void FadeOut(this Camera camera, float fadeOutTime) {
+
+    }
+
+    public static void FadeOut(this Camera camera, float fadeOutTime, System.Action<object> onComplete, object onCompleteParam) {
+
+    }
+    #endregion
 }

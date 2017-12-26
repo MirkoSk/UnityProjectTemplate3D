@@ -55,14 +55,16 @@ public class AudioManager : SubscribedBehaviour {
         AudioHQ.Instance.GetAudioSource(name).Play();
     }
 
-    public void PlayAudio(string name, bool looped) {
-        AudioSource audioSrc = AudioHQ.Instance.GetAudioSource(name);
-        audioSrc.loop = looped;
-        audioSrc.Play();
+    public void PlayAudio(string name, float fadeInTime) {
+        AudioHQ.Instance.GetAudioSource(name).Play(fadeInTime);
     }
 
     public void StopAudio(string name) {
         AudioHQ.Instance.GetAudioSource(name).Stop();
+    }
+
+    public void StopAudio(string name, float fadeOutTime) {
+        AudioHQ.Instance.GetAudioSource(name).Stop(fadeOutTime);
     }
     #endregion
 
