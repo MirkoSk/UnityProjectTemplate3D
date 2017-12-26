@@ -68,11 +68,41 @@ public static class ExtensionMethods {
 
 
     #region Camera
-    public static void FadeOut(this Camera camera, float fadeOutTime) {
+    /// <summary>
+    /// Fades in the screen from an image. You need to add an Image to a Canvas and tag it with "FadeOutImage" for this to work.
+    /// </summary>
+    /// <param name="fadeInTime">Time in seconds the camera shall take to fade in</param>
+    public static void FadeIn(this Camera camera, float fadeInTime) {
+        RectTransform fadeOutImage = GameObject.FindGameObjectWithTag(Constants.TAG_FADE_OUT_IMAGE).GetComponent<RectTransform>();
 
+        // Abort, if no object was found
+        if (fadeOutImage == null) {
+            Debug.LogError("Camera Fade-Out aborting. No GameObject with tag " + Constants.TAG_FADE_OUT_IMAGE + "found");
+            return;
+        }
+
+        LeanTween.alpha(fadeOutImage, 0f, fadeInTime).setEase(LeanTweenType.easeInOutQuad);
+        fadeOutImage.GetComponent<UnityEngine.UI.Image>().enabled = false;
     }
 
-    public static void FadeOut(this Camera camera, float fadeOutTime, System.Action<object> onComplete, object onCompleteParam) {
+    /// <summary>
+    /// Fades the screen smoothly to an image. You need to add an Image to a Canvas and tag it with "FadeOutImage" for this to work.
+    /// </summary>
+    /// <param name="fadeOutTime">Time in seconds the camera shall take to fade out</param>
+    public static void FadeOut(this Camera camera, float fadeOutTime) {
+        RectTransform fadeOutImage = GameObject.FindGameObjectWithTag(Constants.TAG_FADE_OUT_IMAGE).GetComponent<RectTransform>();
+
+        // Abort, if no object was found
+        if (fadeOutImage == null) {
+            Debug.LogError("Camera Fade-Out aborting. No GameObject with tag " + Constants.TAG_FADE_OUT_IMAGE + "found");
+            return;
+        }
+
+        fadeOutImage.GetComponent<UnityEngine.UI.Image>().enabled = true;
+        LeanTween.alpha(fadeOutImage, 1f, fadeOutTime).setEase(LeanTweenType.easeInOutQuad);
+    }
+
+    public static void FadeOut(this Camera camera, GameObject fadeOutPlane, float fadeOutTime, System.Action<object> onComplete, object onCompleteParam) {
 
     }
     #endregion

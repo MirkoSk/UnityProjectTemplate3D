@@ -13,13 +13,13 @@ public class TransformEditor : Editor {
 
         Transform transform = (Transform)target;
 
-        transform.position = EditorGUILayout.Vector3Field("Position", transform.position);
-        transform.rotation = Quaternion.Euler(EditorGUILayout.Vector3Field("Rotation", transform.rotation.eulerAngles));
+        transform.localPosition = EditorGUILayout.Vector3Field("Position", transform.localPosition);
+        transform.localRotation = Quaternion.Euler(EditorGUILayout.Vector3Field("Rotation", transform.localRotation.eulerAngles));
         transform.localScale = EditorGUILayout.Vector3Field("Scale", transform.localScale);
 
         if (GUILayout.Button("Reset Transform")) {
-            transform.position = Vector3.zero;
-            transform.rotation = Quaternion.identity;
+            transform.localPosition = Vector3.zero;
+            transform.localRotation = Quaternion.identity;
             transform.localScale = Vector3.one;
         }
     }
