@@ -64,6 +64,14 @@ public class AudioManager : SubscribedBehaviour {
     public void StopAudio(string name, float fadeOutTime) {
         AudioHQ.Instance.GetAudioSource(name).Stop(fadeOutTime);
     }
+
+    public void SetMusicVolume(float volume) {
+        masterMixer.SetFloat("MusicVolume", volume);
+    }
+
+    public void SetSFXVolume(float volume) {
+        masterMixer.SetFloat("SFXVolume", volume);
+    }
     #endregion
 
 
