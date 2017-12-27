@@ -15,7 +15,7 @@ public class Constants
     #endregion
 
     #region Tags and Layers
-    public static readonly string TAG_FADE_OUT_IMAGE = "FadeOutImage";
+
     #endregion
 
     #region Scenes

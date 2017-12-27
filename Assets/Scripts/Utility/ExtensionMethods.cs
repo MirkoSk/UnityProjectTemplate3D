@@ -63,47 +63,24 @@ public static class ExtensionMethods {
                      source.volume = originalVolume;
                  });
     }
-    #endregion
-
-
-
-    #region Camera
-    /// <summary>
-    /// Fades in the screen from an image. You need to add an Image to a Canvas and tag it with "FadeOutImage" for this to work.
-    /// </summary>
-    /// <param name="fadeInTime">Time in seconds the camera shall take to fade in</param>
-    public static void FadeIn(this Camera camera, float fadeInTime) {
-        RectTransform fadeOutImage = GameObject.FindGameObjectWithTag(Constants.TAG_FADE_OUT_IMAGE).GetComponent<RectTransform>();
-
-        // Abort, if no object was found
-        if (fadeOutImage == null) {
-            Debug.LogError("Camera Fade-Out aborting. No GameObject with tag " + Constants.TAG_FADE_OUT_IMAGE + "found");
-            return;
-        }
-
-        LeanTween.alpha(fadeOutImage, 0f, fadeInTime).setEase(LeanTweenType.easeInOutQuad);
-        fadeOutImage.GetComponent<UnityEngine.UI.Image>().enabled = false;
-    }
 
     /// <summary>
-    /// Fades the screen smoothly to an image. You need to add an Image to a Canvas and tag it with "FadeOutImage" for this to work.
+    /// Cross-Fades between two AudioSources over the specified time.
     /// </summary>
-    /// <param name="fadeOutTime">Time in seconds the camera shall take to fade out</param>
-    public static void FadeOut(this Camera camera, float fadeOutTime) {
-        RectTransform fadeOutImage = GameObject.FindGameObjectWithTag(Constants.TAG_FADE_OUT_IMAGE).GetComponent<RectTransform>();
-
-        // Abort, if no object was found
-        if (fadeOutImage == null) {
-            Debug.LogError("Camera Fade-Out aborting. No GameObject with tag " + Constants.TAG_FADE_OUT_IMAGE + "found");
-            return;
-        }
-
-        fadeOutImage.GetComponent<UnityEngine.UI.Image>().enabled = true;
-        LeanTween.alpha(fadeOutImage, 1f, fadeOutTime).setEase(LeanTweenType.easeInOutQuad);
-    }
-
-    public static void FadeOut(this Camera camera, GameObject fadeOutPlane, float fadeOutTime, System.Action<object> onComplete, object onCompleteParam) {
-
+    /// <param name="otherSource">Reference to the AudioSource that shall fade in</param>
+    /// <param name="fadingTime">Length of the Cross-Fade in seconds</param>
+    public static void CrossFade(this AudioSource thisSource, AudioSource otherSource, float fadingTime) {
+        float originalVolumeThis = thisSource.volume;
+        float originalVolumeOther = otherSource.volume;
+        LeanTween.value(thisSource.gameObject, (float f) => { thisSource.volume = f; }, originalVolumeThis, 0f, fadingTime)
+                 .setEase(LeanTweenType.easeInOutQuad)
+                 .setOnComplete(() => {
+                     thisSource.Stop();
+                     thisSource.volume = originalVolumeThis;
+                 });
+        LeanTween.value(otherSource.gameObject, (float f) => { otherSource.volume = f; }, 0f, originalVolumeOther, fadingTime)
+                 .setEase(LeanTweenType.easeInOutQuad);
+        otherSource.Play();
     }
     #endregion
 }
