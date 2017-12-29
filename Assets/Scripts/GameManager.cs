@@ -45,7 +45,7 @@ public class GameManager : SubscribedBehaviour {
 
 
 
-    #region Public Functions
+    #region Public Functions    
     /// <summary>
     /// Loads the next scene in build index
     /// </summary>

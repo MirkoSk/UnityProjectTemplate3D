@@ -12,6 +12,7 @@ public class Constants
     public static readonly string INPUT_VERTICAL = "Vertical";
     public static readonly string INPUT_DEBUGMODE = "DebugMode";
     public static readonly string INPUT_INTERACT = "Interact";
+    public static readonly string INPUT_ESCAPE = "Escape";
     #endregion
 
     #region Tags and Layers
