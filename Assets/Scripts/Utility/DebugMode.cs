@@ -12,7 +12,7 @@ public class DebugMode : SubscribedBehaviour {
     public static DebugMode Instance;
 
     private bool debugMode = false;
-    
+
 
 
     //Awake is always called before any Start functions
@@ -24,10 +24,11 @@ public class DebugMode : SubscribedBehaviour {
             Instance = this;
 
         //If instance already exists and it's not this:
-        else if (Instance != this)
-
+        else if (Instance != this) { 
             //Then destroy this. This enforces our singleton pattern, meaning there can only ever be one instance of a DebugMode.
+            Debug.Log("There can only be one DebugMode instantiated. Destroying this Instance...");
             Destroy(gameObject);
+        }
 
         //Sets this to not be destroyed when reloading scene
         DontDestroyOnLoad(gameObject);

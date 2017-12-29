@@ -30,7 +30,7 @@ public class AudioManager : SubscribedBehaviour {
         else if (Instance != this) {
 
             //Then destroy this. This enforces our singleton pattern, meaning there can only ever be one instance of an AudioManager.
-            Debug.LogError("There can only be one AudioManager instantiated. Destroying this Instance...");
+            Debug.Log("There can only be one AudioManager instantiated. Destroying this Instance...");
             Destroy(this);
         }
     }
