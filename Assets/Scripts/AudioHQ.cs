@@ -130,7 +130,8 @@ public class AudioHQ : SubscribedBehaviour {
     /// Removes all AudioSources from this GameObject
     /// </summary>
     public void RemoveAllAudioSources() {
-        foreach (AudioSource src in audioSources) {
+        AudioSource[] sources = GetComponents<AudioSource>();
+        foreach (AudioSource src in sources) {
             StartCoroutine(destroyAudioSource(src));
         }
         audioSources.Clear();
