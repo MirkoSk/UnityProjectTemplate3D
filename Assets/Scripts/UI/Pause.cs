@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class PauseMenu : SubscribedBehaviour {
+public class Pause : SubscribedBehaviour {
 
     GameObject pauseMenu,
                mainMenu,
@@ -27,6 +27,9 @@ public class PauseMenu : SubscribedBehaviour {
         if (Input.GetButtonDown(Constants.INPUT_ESCAPE)) {
             if (gameIsPaused) ResumeGame();
             else PauseGame();
+        }
+        if (gameIsPaused && !optionsMenu.activeSelf && Input.GetButtonDown(Constants.INPUT_CANCEL)) {
+            resumeButton.GetComponent<Button>().onClick.Invoke();
         }
     }
 

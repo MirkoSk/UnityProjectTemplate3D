@@ -11,6 +11,7 @@ public class OptionsMenu : SubscribedBehaviour {
     #region Variable Declarations
     [SerializeField] TMPro.TMP_Dropdown resolutionDropdown;
     [SerializeField] Toggle fullscreenToggle;
+    [SerializeField] Button backButton;
     Resolution[] resolutions;
     #endregion
 
@@ -44,7 +45,9 @@ public class OptionsMenu : SubscribedBehaviour {
 	}
 	
 	private void Update() {
-		
+        if (Input.GetButtonDown(Constants.INPUT_CANCEL)) {
+            backButton.onClick.Invoke();
+        }
 	}
     #endregion
 
