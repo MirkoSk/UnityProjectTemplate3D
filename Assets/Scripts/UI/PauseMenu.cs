@@ -1,12 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class PauseMenu : SubscribedBehaviour {
 
     GameObject pauseMenu,
                mainMenu,
-               optionsMenu;
+               optionsMenu,
+               resumeButton;
+    EventSystem eventSystem;
     bool gameIsPaused;
     public bool GameIsPaused { get { return gameIsPaused; } }
 
@@ -14,7 +18,9 @@ public class PauseMenu : SubscribedBehaviour {
 	void Start () {
         pauseMenu = transform.Find("PauseMenu").gameObject;
         mainMenu = pauseMenu.transform.Find("MainMenu").gameObject;
+        resumeButton = mainMenu.transform.Find("ResumeButton").gameObject;
         optionsMenu = pauseMenu.transform.Find("OptionsMenu").gameObject;
+        eventSystem = transform.parent.Find("EventSystem").GetComponent<EventSystem>();
     }
 
     private void Update() {
@@ -28,6 +34,7 @@ public class PauseMenu : SubscribedBehaviour {
         Time.timeScale = 0;
         Rumble.Instance.StopAllRumble();
         pauseMenu.SetActive(true);
+        eventSystem.SetSelectedGameObject(resumeButton);
         gameIsPaused = true;
     }
 
@@ -36,6 +43,7 @@ public class PauseMenu : SubscribedBehaviour {
         pauseMenu.SetActive(false);
         optionsMenu.SetActive(false);
         mainMenu.SetActive(true);
+        eventSystem.SetSelectedGameObject(null);
         gameIsPaused = false;
     }
 }
