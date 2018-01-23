@@ -34,8 +34,14 @@ public class Rumble : SubscribedBehaviour {
             Destroy(this);
         }
     }
-
+    private void Start() {
+        RumbleConstant(PlayerIndex.One, 10f);
+    }
     private void OnDisable() {
+        StopAllRumble();
+    }
+
+    private void OnLevelWasLoaded(int level) {
         StopAllRumble();
     }
     #endregion
