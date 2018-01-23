@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using XInputDotNetPure;
 using System;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 /// Class providing functions to make an XBox Controller Rumble
@@ -35,12 +36,13 @@ public class Rumble : SubscribedBehaviour {
         }
     }
 
-    private void OnDisable() {
-        StopAllRumble();
+    private void OnEnable() {
+        SceneManager.sceneLoaded += OnLevelFinishedLoading;
     }
 
-    private void OnLevelWasLoaded(int level) {
+    private void OnDisable() {
         StopAllRumble();
+        SceneManager.sceneLoaded -= OnLevelFinishedLoading;
     }
     #endregion
 
@@ -106,6 +108,10 @@ public class Rumble : SubscribedBehaviour {
         }
 
         return true;
+    }
+
+    private void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode) {
+        StopAllRumble();
     }
     #endregion
 
