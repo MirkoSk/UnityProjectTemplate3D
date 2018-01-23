@@ -26,6 +26,7 @@ public class PauseMenu : SubscribedBehaviour {
 
     public void PauseGame() {
         Time.timeScale = 0;
+        Rumble.Instance.StopAllRumble();
         pauseMenu.SetActive(true);
         gameIsPaused = true;
     }

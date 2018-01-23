@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using XInputDotNetPure;
+using System;
 
 /// <summary>
 /// Class providing functions to make an XBox Controller Rumble
@@ -10,7 +11,6 @@ public class Rumble : SubscribedBehaviour {
 
     #region Variable Declarations
     Coroutine rumbleCoroutine;
-    float timer;
 
     public static Rumble Instance;
     #endregion
@@ -35,23 +35,28 @@ public class Rumble : SubscribedBehaviour {
         }
     }
 
-    private void Start () {
-		
-	}
-	
-	private void Update () {
-        if (timer == 0) RumbleConstant(PlayerIndex.One, -1f, 1f, 1f);
-        if (ExtensionMethods.InRange(timer, 2f, 0.05f)) RumbleConstant(PlayerIndex.One, 1f, 1f, 1f);
-        if (ExtensionMethods.InRange(timer, 4f, 0.05f)) RumbleConstant(PlayerIndex.One, 1f, 12348f, 0f);
-        if (ExtensionMethods.InRange(timer, 6f, 0.05f)) RumbleConstant(PlayerIndex.One, 1f, 0f, 12348f);
-
-        timer += Time.deltaTime;
-	}
+    private void OnDisable() {
+        StopAllRumble();
+    }
     #endregion
 
 
 
     #region Public Functions
+    /// <summary>
+    /// Method to stop the rumble of all available controllers.
+    /// Is called OnDisable(), to prevent the controller to keep on rumbling after exiting the game.
+    /// </summary>
+    public void StopAllRumble() {
+        if (rumbleCoroutine != null) {
+            StopCoroutine(rumbleCoroutine);
+            rumbleCoroutine = null;
+        }
+        for (int i = 0; i < Enum.GetNames(typeof(PlayerIndex)).Length; i++) {
+            GamePad.SetVibration((PlayerIndex)i, 0f, 0f);
+        }
+    }
+
     /// <summary>
     /// Controller-Rumble for one second with both motors constantly at max velocity.
     /// </summary>
