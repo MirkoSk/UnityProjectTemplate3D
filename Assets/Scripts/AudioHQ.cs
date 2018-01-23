@@ -75,7 +75,7 @@ public class AudioHQ : SubscribedBehaviour {
         // All audioClips removed? -> Delete all audioSources and return
         if (audioClips.Length == 0 && audioSources.Count != 0) {
             foreach (AudioSource src in audioSources) {
-                StartCoroutine(destroyAudioSource(src));
+                StartCoroutine(DestroyAudioSource(src));
             }
             audioSources.Clear();
             return;
@@ -112,7 +112,7 @@ public class AudioHQ : SubscribedBehaviour {
                     break;
                 }
                 if (audioSources[source].clip != null && clip == audioClips.Length - 1) {
-                    StartCoroutine(destroyAudioSource(audioSources[source]));
+                    StartCoroutine(DestroyAudioSource(audioSources[source]));
                     audioSources.RemoveAt(source);
                 }
             }
@@ -132,7 +132,7 @@ public class AudioHQ : SubscribedBehaviour {
     public void RemoveAllAudioSources() {
         AudioSource[] sources = GetComponents<AudioSource>();
         foreach (AudioSource src in sources) {
-            StartCoroutine(destroyAudioSource(src));
+            StartCoroutine(DestroyAudioSource(src));
         }
         audioSources.Clear();
     }
@@ -159,7 +159,7 @@ public class AudioHQ : SubscribedBehaviour {
     /// <summary>
     /// Helper Coroutine, because DestroyImmediate can't be called on OnValidate()
     /// </summary>
-    IEnumerator destroyAudioSource(AudioSource src) {
+    IEnumerator DestroyAudioSource(AudioSource src) {
         yield return null;
         DestroyImmediate(src);
     }

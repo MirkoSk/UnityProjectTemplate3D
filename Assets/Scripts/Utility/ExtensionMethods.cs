@@ -83,4 +83,24 @@ public static class ExtensionMethods {
         otherSource.Play();
     }
     #endregion
+
+
+
+    #region General Static Helper Methods
+    /// <summary>
+    /// Checks if a value is in range of a defined target value.
+    /// </summary>
+    /// <param name="value">Value to check if it is in range.</param>
+    /// <param name="targetValue">The target value.</param>
+    /// <param name="range">The range applied to the target value.</param>
+    /// <returns></returns>
+    public static bool InRange(float value, float targetValue, float range) {
+        if (value <= targetValue + range && value >= targetValue - range) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    #endregion
 }
