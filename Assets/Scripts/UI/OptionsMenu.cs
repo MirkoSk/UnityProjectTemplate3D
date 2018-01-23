@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Audio;
 
 /// <summary>
 /// 
@@ -12,6 +13,7 @@ public class OptionsMenu : SubscribedBehaviour {
     [SerializeField] TMPro.TMP_Dropdown resolutionDropdown;
     [SerializeField] Toggle fullscreenToggle;
     [SerializeField] Button backButton;
+    [SerializeField] AudioMixer masterMixer;
     Resolution[] resolutions;
     #endregion
 
@@ -65,6 +67,14 @@ public class OptionsMenu : SubscribedBehaviour {
 
     public void SetFullscreen(bool isFullscreen) {
         Screen.fullScreen = isFullscreen;
+    }
+
+    public void SetSFXVolume(float volume) {
+        masterMixer.SetFloat(Constants.MIXER_SFX_VOLUME, volume);
+    }
+
+    public void SetMusicVolume(float volume) {
+        masterMixer.SetFloat(Constants.MIXER_MUSIC_VOLUME, volume);
     }
     #endregion
 

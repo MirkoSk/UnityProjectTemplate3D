@@ -13,6 +13,7 @@ public class Constants
     public static readonly string INPUT_DEBUGMODE = "DebugMode";
     public static readonly string INPUT_INTERACT = "Interact";
     public static readonly string INPUT_ESCAPE = "Escape";
+    public static readonly string INPUT_SUBMIT = "Submit";
     public static readonly string INPUT_CANCEL = "Cancel";
     #endregion
 
@@ -26,6 +27,8 @@ public class Constants
     #endregion
 
     #region Sounds
-
+    // Exposed Parameters in Mixers
+    public static readonly string MIXER_SFX_VOLUME = "SFXVolume";
+    public static readonly string MIXER_MUSIC_VOLUME = "MusicVolume";
     #endregion
 }
