@@ -8,7 +8,7 @@ using UnityEngine.SceneManagement;
 /// <summary>
 /// Class providing functions to make an XBox Controller Rumble
 /// </summary>
-public class Rumble : SubscribedBehaviour {
+public class Rumble : MonoBehaviour {
 
     #region Variable Declarations
     Coroutine rumbleCoroutine;
