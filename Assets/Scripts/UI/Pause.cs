@@ -24,12 +24,17 @@ public class Pause : SubscribedBehaviour {
     }
 
     private void Update() {
-        if (Input.GetButtonDown(Constants.INPUT_ESCAPE)) {
-            if (gameIsPaused) ResumeGame();
-            else PauseGame();
-        }
         if (gameIsPaused && !optionsMenu.activeSelf && Input.GetButtonDown(Constants.INPUT_CANCEL)) {
             resumeButton.GetComponent<Button>().onClick.Invoke();
+        }
+
+        if (Input.GetButtonDown(Constants.INPUT_ESCAPE)) {
+            if (gameIsPaused) {
+                ResumeGame();
+            }
+            else {
+                PauseGame();
+            }
         }
     }
 
