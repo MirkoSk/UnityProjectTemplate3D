@@ -16,7 +16,7 @@ public class GameManager : SubscribedBehaviour {
 
     #region Unity Event Functions
     //Awake is always called before any Start functions
-    void Awake() {
+    private void Awake() {
         //Check if instance already exists
         if (Instance == null)
 

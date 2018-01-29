@@ -20,7 +20,7 @@ public class AudioHQ : SubscribedBehaviour {
 
 
     #region Unity Event Functions
-    void OnEnable() {
+    override protected void OnEnable() {
         //Check if instance already exists
         if (Instance == null)
 
@@ -36,7 +36,7 @@ public class AudioHQ : SubscribedBehaviour {
         }
     }
 
-    private void OnDisable() {
+    override protected void OnDisable() {
         Instance = null;
     }
     #endregion

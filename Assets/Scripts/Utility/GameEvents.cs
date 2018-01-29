@@ -15,10 +15,9 @@ public class GameEvents {
 
 
 
-    /// <summary>
-    /// Helper Function to start the exploration mode from within other classes
-    /// </summary>
-    public static void StartLevelCompleted() {
+    // Helper functions to start events from within other classes
+    public static void StartLevelCompleted()
+    {
         LevelCompleted();
     }
 }

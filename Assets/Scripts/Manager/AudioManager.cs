@@ -19,7 +19,7 @@ public class AudioManager : SubscribedBehaviour {
 
 
     #region Unity Event Functions
-    void OnEnable() {
+    void Awake() {
         //Check if instance already exists
         if (Instance == null)
 
@@ -33,10 +33,6 @@ public class AudioManager : SubscribedBehaviour {
             Debug.Log("There can only be one AudioManager instantiated. Destroying this Instance...");
             Destroy(this);
         }
-    }
-
-    private void OnDisable() {
-        Instance = null;
     }
     #endregion
 
