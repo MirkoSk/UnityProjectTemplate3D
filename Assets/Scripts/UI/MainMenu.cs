@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using Pixelplacement;
 
 /// <summary>
 /// 
@@ -11,6 +12,7 @@ public class MainMenu : MonoBehaviour
 
     #region Variable Declarations
     [SerializeField] GameObject playButton;
+    [SerializeField] DisplayObject mainMenu;
 
     int howToPlay;
     //EventSystem eventSystem;
@@ -21,6 +23,8 @@ public class MainMenu : MonoBehaviour
 	#region Unity Event Functions
 	private void Start() {
         //eventSystem = GameObject.FindObjectOfType<EventSystem>();
+
+        mainMenu.SetActive(true);
 	}
     #endregion
 

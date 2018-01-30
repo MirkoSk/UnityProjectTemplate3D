@@ -3,28 +3,29 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using Pixelplacement;
 
 public class PauseMenu : MonoBehaviour {
 
-    GameObject pauseMenu,
-               mainMenu,
-               optionsMenu,
-               resumeButton;
+    DisplayObject pauseMenu,
+                  mainMenu,
+                  optionsMenu;
+    GameObject resumeButton;
     EventSystem eventSystem;
     bool gameIsPaused;
     public bool GameIsPaused { get { return gameIsPaused; } }
 
 	// Use this for initialization
 	void Start () {
-        pauseMenu = transform.Find("PauseMenu").gameObject;
-        mainMenu = pauseMenu.transform.Find("MainMenu").gameObject;
+        pauseMenu = transform.Find("PauseMenu").GetComponent<DisplayObject>();
+        mainMenu = pauseMenu.transform.Find("MainMenu").GetComponent<DisplayObject>();
         resumeButton = mainMenu.transform.Find("ResumeButton").gameObject;
-        optionsMenu = pauseMenu.transform.Find("OptionsMenu").gameObject;
+        optionsMenu = pauseMenu.transform.Find("OptionsMenu").GetComponent<DisplayObject>();
         eventSystem = transform.parent.Find("EventSystem").GetComponent<EventSystem>();
     }
 
     private void Update() {
-        if (gameIsPaused && !optionsMenu.activeSelf && Input.GetButtonDown(Constants.INPUT_CANCEL)) {
+        if (gameIsPaused && !optionsMenu.gameObject.activeSelf && Input.GetButtonDown(Constants.INPUT_CANCEL)) {
             resumeButton.GetComponent<Button>().onClick.Invoke();
         }
 
@@ -42,6 +43,7 @@ public class PauseMenu : MonoBehaviour {
         Time.timeScale = 0;
         Rumble.Instance.StopAllRumble();
         pauseMenu.SetActive(true);
+        mainMenu.SetActive(true);
         eventSystem.SetSelectedGameObject(resumeButton);
         gameIsPaused = true;
     }
@@ -57,5 +59,9 @@ public class PauseMenu : MonoBehaviour {
 
     public void ReturnToMainMenu() {
         GameManager.Instance.LoadScene(Constants.SCENE_MAIN_MENU);
+    }
+
+    public void ExitGame() {
+        GameManager.Instance.ExitGame();
     }
 }
