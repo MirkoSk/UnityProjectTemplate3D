@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class Pause : SubscribedBehaviour {
+public class PauseMenu : MonoBehaviour {
 
     GameObject pauseMenu,
                mainMenu,
@@ -53,5 +53,9 @@ public class Pause : SubscribedBehaviour {
         mainMenu.SetActive(true);
         eventSystem.SetSelectedGameObject(null);
         gameIsPaused = false;
+    }
+
+    public void ReturnToMainMenu() {
+        GameManager.Instance.LoadScene(Constants.SCENE_MAIN_MENU);
     }
 }

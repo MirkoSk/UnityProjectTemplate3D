@@ -12,6 +12,9 @@ public class AudioManager : SubscribedBehaviour {
     // Visible in Inspector
     [SerializeField] AudioMixer masterMixer;
     public AudioMixer MasterMixer { get { return masterMixer; } }
+    [SerializeField] AudioTrack[] audioTracks;
+    
+    Dictionary<string, AudioSource> audioSources = new Dictionary<string, AudioSource>();
 
     public static AudioManager Instance;
     #endregion
@@ -30,50 +33,66 @@ public class AudioManager : SubscribedBehaviour {
         else if (Instance != this) {
 
             //Then destroy this. This enforces our singleton pattern, meaning there can only ever be one instance of an AudioManager.
-            Debug.Log("There can only be one AudioManager instantiated. Destroying this Instance...");
             Destroy(this);
         }
+    }
+
+    private void Start()
+    {
+        SpawnAudioSources();
+        FillDictionary();
     }
     #endregion
 
 
 
     #region Custom Event Functions
-    // Every child of SubscribedBehaviour can implement these
+
     #endregion
 
 
 
     #region Public Functions
-    public void PlayAudio(string name) {
-        AudioHQ.Instance.GetAudioSource(name).Play();
+    public void PlayMenuConfirm() {
+        AudioSource src;
+        audioSources.TryGetValue("MenuConfirm", out src);
+        src.Play();
     }
 
-    public void PlayAudio(string name, float fadeInTime) {
-        AudioHQ.Instance.GetAudioSource(name).Play(fadeInTime);
+    public void SetMusicVolume(float volume)
+    {
+        masterMixer.SetFloat(Constants.MIXER_MUSIC_VOLUME, volume);
     }
 
-    public void StopAudio(string name) {
-        AudioHQ.Instance.GetAudioSource(name).Stop();
-    }
-
-    public void StopAudio(string name, float fadeOutTime) {
-        AudioHQ.Instance.GetAudioSource(name).Stop(fadeOutTime);
-    }
-
-    public void SetMusicVolume(float volume) {
-        masterMixer.SetFloat("MusicVolume", volume);
-    }
-
-    public void SetSFXVolume(float volume) {
-        masterMixer.SetFloat("SFXVolume", volume);
+    public void SetSFXVolume(float volume)
+    {
+        masterMixer.SetFloat(Constants.MIXER_SFX_VOLUME, volume);
     }
     #endregion
 
 
 
     #region Private Functions
+    void SpawnAudioSources()
+    {
+        foreach (AudioTrack track in audioTracks)
+        {
+            AudioSource source = gameObject.AddComponent<AudioSource>();
+            source.clip = track.clip;
+            source.outputAudioMixerGroup = track.output;
+            source.playOnAwake = track.playOnAwake;
+            source.loop = track.loop;
+        }
+    }
 
+    void FillDictionary()
+    {
+        AudioSource[] sources = gameObject.GetComponents<AudioSource>();
+        foreach (AudioSource source in sources)
+        {
+            audioSources.Add(source.clip.name, source);
+        }
+    }
     #endregion
 
 

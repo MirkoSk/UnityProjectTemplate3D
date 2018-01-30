@@ -26,15 +26,36 @@ public class GameManager : SubscribedBehaviour {
         //If instance already exists and it's not this:
         else if (Instance != this) {
 
-            //Then destroy this. This enforces our singleton pattern, meaning there can only ever be one instance of an AudioManager.
-            Debug.Log("There can only be one GameManager instantiated. Destroying this Instance...");
+            //Then destroy this. This enforces our singleton pattern, meaning there can only ever be one instance of a GameManager.
             Destroy(this);
         }
     }
-	
-	private void Update() {
+
+    override protected void OnEnable()
+    {
+        base.OnEnable();
+
+        SceneManager.sceneLoaded += OnLevelFinishedLoading;
+    }
+
+    private void Start()
+    {
+        #if !UNITY_EDITOR
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        #endif
+    }
+
+    private void Update() {
 		
 	}
+
+    override protected void OnDisable()
+    {
+        base.OnDisable();
+
+        SceneManager.sceneLoaded -= OnLevelFinishedLoading;
+    }
     #endregion
 
 
@@ -47,7 +68,7 @@ public class GameManager : SubscribedBehaviour {
 
     #region Public Functions    
     /// <summary>
-    /// Loads the next scene in build index
+    /// Loads the next scene in build index.
     /// </summary>
     public void LoadNextScene() {
         int activeScene = SceneManager.GetActiveScene().buildIndex;
@@ -60,7 +81,15 @@ public class GameManager : SubscribedBehaviour {
     }
 
     /// <summary>
-    /// Quits the application or exits play mode when in editor
+    /// Loads a scene by name.
+    /// </summary>
+    /// <param name="name">Name of the scene to load. Use Contants class.</param>
+    public void LoadScene(string name) {
+        SceneManager.LoadScene(name);
+    }
+
+    /// <summary>
+    /// Quits the application or exits play mode when in editor.
     /// </summary>
     public void ExitGame() {
         Debug.Log("Exiting the game");
@@ -75,5 +104,8 @@ public class GameManager : SubscribedBehaviour {
 
 
     #region Private Functions
+    void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode) {
+
+    }
     #endregion
 }

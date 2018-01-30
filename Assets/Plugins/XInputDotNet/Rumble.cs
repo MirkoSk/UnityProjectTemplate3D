@@ -31,7 +31,6 @@ public class Rumble : MonoBehaviour {
         else if (Instance != this) {
 
             //Then destroy this. This enforces our singleton pattern, meaning there can only ever be one instance of an AudioManager.
-            Debug.Log("There can only be one Rumble class instantiated. Destroying this Instance...");
             Destroy(this);
         }
     }
@@ -103,7 +102,6 @@ public class Rumble : MonoBehaviour {
     #region Private Functions
     private bool CheckCallForValidity() {
         if (rumbleCoroutine != null) {
-            Debug.LogWarning("Couldn't trigger rumble, because another rumble is already in progress.");
             return false;
         }
 

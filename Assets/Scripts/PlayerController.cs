@@ -6,7 +6,7 @@ using UnityEngine;
 /// Handles everything related to the movement of Haru, our playable Character
 /// </summary>
 [RequireComponent(typeof(Rigidbody))]
-public class PlayerController : SubscribedBehaviour
+public class PlayerController : MonoBehaviour
 {
     
     #region Variable Declarations
@@ -49,9 +49,7 @@ public class PlayerController : SubscribedBehaviour
 
 
     #region Custom Event Functions
-    protected override void OnLevelCompleted() {
-        
-    }
+    
     #endregion
 
 

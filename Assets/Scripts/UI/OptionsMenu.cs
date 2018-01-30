@@ -7,13 +7,12 @@ using UnityEngine.Audio;
 /// <summary>
 /// 
 /// </summary>
-public class OptionsMenu : SubscribedBehaviour {
+public class OptionsMenu : MonoBehaviour {
 
     #region Variable Declarations
     [SerializeField] TMPro.TMP_Dropdown resolutionDropdown;
     [SerializeField] Toggle fullscreenToggle;
     [SerializeField] Button backButton;
-    [SerializeField] AudioMixer masterMixer;
     Resolution[] resolutions;
     #endregion
 
@@ -69,12 +68,14 @@ public class OptionsMenu : SubscribedBehaviour {
         Screen.fullScreen = isFullscreen;
     }
 
-    public void SetSFXVolume(float volume) {
-        masterMixer.SetFloat(Constants.MIXER_SFX_VOLUME, volume);
+    public void SetMusicVolume(float volume)
+    {
+        AudioManager.Instance.SetMusicVolume(volume);
     }
 
-    public void SetMusicVolume(float volume) {
-        masterMixer.SetFloat(Constants.MIXER_MUSIC_VOLUME, volume);
+    public void SetSFXVolume(float volume)
+    {
+        AudioManager.Instance.SetSFXVolume(volume);
     }
     #endregion
 

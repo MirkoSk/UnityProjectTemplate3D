@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da34c79c6ccc19343b6a0cc4c9847d6f, type: 3}
+  m_Name: MenuConfirm
+  m_EditorClassIdentifier: 
+  clip: {fileID: 8300000, guid: c23fc62dc0e0a9145b3197a0ac5a23a1, type: 3}
+  output: {fileID: 243254621242404290, guid: e213e6dc1e1471a4189369ba1ec91b45, type: 2}
+  mute: 0
+  bypassEffects: 0
+  bypassListenerEffects: 0
+  playOnAwake: 0
+  loop: 0
+  priority: 128
+  volume: 1
+  pitch: 1
+  stereoPan: 0
