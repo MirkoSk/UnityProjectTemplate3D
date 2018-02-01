@@ -22,10 +22,9 @@ public class Constants
     #endregion
 
     #region Scenes
-    public static readonly string SCENE_OPTIONS = "OptionsMenu";
-    public static readonly string SCENE_MAIN_MENU = "MainMenu";
-    public static readonly string SCENE_CREDITS = "CreditsScene";
     public static readonly string SCENE_TITLE = "TitleScreen";
+    public static readonly string SCENE_MAIN_MENU = "MainMenu";
+    public static readonly string SCENE_CREDITS = "Credits";
     #endregion
 
     #region Sounds
