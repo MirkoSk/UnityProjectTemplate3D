@@ -82,6 +82,7 @@ public class AudioManager : SubscribedBehaviour {
             source.outputAudioMixerGroup = track.output;
             source.playOnAwake = track.playOnAwake;
             source.loop = track.loop;
+            source.volume = track.volume;
         }
     }
 
