@@ -24,7 +24,9 @@ public class Constants
     #region Scenes
     public static readonly string SCENE_TITLE = "TitleScreen";
     public static readonly string SCENE_MAIN_MENU = "MainMenu";
+    public static readonly string SCENE_INTRO = "Intro";
     public static readonly string SCENE_CREDITS = "Credits";
+    public static readonly string SCENE_LEVEL01 = "Level01";
     #endregion
 
     #region Sounds

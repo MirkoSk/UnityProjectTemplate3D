@@ -17,11 +17,11 @@ public class PauseMenu : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        pauseMenu = transform.Find("PauseMenu").GetComponent<DisplayObject>();
+        pauseMenu = transform.parent.Find("PauseMenu").GetComponent<DisplayObject>();
         mainMenu = pauseMenu.transform.Find("MainMenu").GetComponent<DisplayObject>();
         resumeButton = mainMenu.transform.Find("ResumeButton").gameObject;
         optionsMenu = pauseMenu.transform.Find("OptionsMenu").GetComponent<DisplayObject>();
-        eventSystem = transform.parent.Find("EventSystem").GetComponent<EventSystem>();
+        eventSystem = transform.parent.parent.Find("EventSystem").GetComponent<EventSystem>();
     }
 
     private void Update() {
@@ -58,7 +58,7 @@ public class PauseMenu : MonoBehaviour {
     }
 
     public void ReturnToMainMenu() {
-        GameManager.Instance.LoadScene(Constants.SCENE_MAIN_MENU);
+        GameManager.Instance.ChangeGameState(GameState.MainMenu);
     }
 
     public void ExitGame() {

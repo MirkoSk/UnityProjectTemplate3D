@@ -37,12 +37,12 @@ public class MainMenu : MonoBehaviour
 
     public void LoadCredits()
     {
-        GameManager.Instance.LoadScene(Constants.SCENE_CREDITS);
+        GameManager.Instance.ChangeGameState(GameState.Credits);
     }
 
     public void Play()
     {
-        GameManager.Instance.LoadNextScene();
+        GameManager.Instance.ChangeGameState(GameState.Play);
     }
     #endregion
 }

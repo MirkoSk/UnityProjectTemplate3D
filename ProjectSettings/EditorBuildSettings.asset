@@ -7,13 +7,16 @@ EditorBuildSettings:
   m_Scenes:
   - enabled: 1
     path: Assets/Scenes/TitleScreen.unity
-    guid: 0c48d61f6c1d54648886bc65e2769123
+    guid: f9792812534b7ee4f925c61c75b031cf
   - enabled: 1
     path: Assets/Scenes/MainMenu.unity
     guid: a303d35fc0e5bdc4eb685f36279c3f0e
   - enabled: 1
+    path: Assets/Scenes/Intro.unity
+    guid: 299cbb5c8ffe24a49a0e0f2933d74176
+  - enabled: 1
     path: Assets/Scenes/TestScene.unity
     guid: 256776ab048699f48aa0487c5e76e888
   - enabled: 1
-    path: Assets/Scenes/CreditsScene.unity
-    guid: 65b3e5caa79467c48af0502c8bc3a1bd
+    path: Assets/Scenes/Credits.unity
+    guid: 313ee6008a1d1cc4aaa7092914ac8842
