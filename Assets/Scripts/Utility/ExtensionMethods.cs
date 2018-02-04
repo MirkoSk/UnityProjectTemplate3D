@@ -4,6 +4,23 @@ using UnityEngine;
 
 public static class ExtensionMethods {
 
+    #region GameObject
+    public static T GetRequiredComponent<T>(this GameObject obj) where T : MonoBehaviour
+    {
+        T component = obj.GetComponent<T>();
+
+        if (component == null)
+        {
+            Debug.LogError("Expected to find component of type "
+               + typeof(T) + " but found none", obj);
+        }
+
+        return component;
+    }
+    #endregion
+
+
+
     #region Transform
     /// <summary>
     /// Looks for components of type T with specified Tag. Returns the first component of type T found.
