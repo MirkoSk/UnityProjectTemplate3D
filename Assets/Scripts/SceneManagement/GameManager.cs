@@ -42,10 +42,8 @@ public class GameManager : SubscribedBehaviour
         }
     }
 
-    override protected void OnEnable()
+    override protected void SubscribedOnEnable()
     {
-        base.OnEnable();
-
         SceneManager.sceneLoaded += OnLevelLoaded;
     }
 
@@ -65,7 +63,7 @@ public class GameManager : SubscribedBehaviour
 
     }
 
-    override protected void OnDisable()
+    override protected void SubscribedOnDisable()
     {
         base.OnDisable();
 
