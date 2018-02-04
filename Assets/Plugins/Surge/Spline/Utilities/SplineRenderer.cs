@@ -45,7 +45,9 @@ namespace Pixelplacement
 			_lineRenderer.endWidth = .03f;
 			_lineRenderer.startColor = Color.white;
 			_lineRenderer.endColor = Color.yellow;
-		}
+
+            _lineRenderer.material = Resources.Load("SplineRenderer") as Material;
+        }
 		#endregion
 
 		#region Loop
@@ -57,9 +59,6 @@ namespace Pixelplacement
 				//refs:
 				_lineRenderer = GetComponent<LineRenderer> ();
 				_spline = GetComponent<Spline> ();
-
-				//material:
-				_lineRenderer.material = Resources.Load ("SplineRenderer") as Material;
 
 				//initial setup:
 				ConfigureLineRenderer ();
