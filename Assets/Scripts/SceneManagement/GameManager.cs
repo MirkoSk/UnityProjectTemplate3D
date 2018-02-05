@@ -49,7 +49,7 @@ public class GameManager : SubscribedBehaviour
 
     private void Start()
     {
-        gameStateMachine = GetComponent<StateMachine>();
+        gameStateMachine = gameObject.GetRequiredComponent<StateMachine>();
         
         #if !UNITY_EDITOR
         // Lock and hide cursor in built game
@@ -65,8 +65,6 @@ public class GameManager : SubscribedBehaviour
 
     override protected void SubscribedOnDisable()
     {
-        base.OnDisable();
-
         SceneManager.sceneLoaded -= OnLevelLoaded;
     }
     #endregion
