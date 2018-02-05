@@ -30,6 +30,13 @@ public class PrefabInstance : MonoBehaviour
 
     void OnEnable()
     {
+        // If script gets instantiated in the scene during runtime: Spawn the referenced objects
+        if (EditorApplication.isPlaying)
+        {
+            BakeInstance(this);
+            return;
+        }
+
         things.Clear();
         if (enabled)
             Rebuild(prefab, Matrix4x4.identity);
@@ -42,7 +49,7 @@ public class PrefabInstance : MonoBehaviour
 
         Matrix4x4 baseMat = inMatrix * Matrix4x4.TRS(-source.transform.position, Quaternion.identity, Vector3.one);
 
-        foreach (Renderer mr in source.GetComponentsInChildren(typeof(Renderer), true))
+        foreach (MeshRenderer mr in source.GetComponentsInChildren(typeof(MeshRenderer), true))
         {
             things.Add(new Thingy()
             {
@@ -94,6 +101,7 @@ public class PrefabInstance : MonoBehaviour
             BakeInstance(pi);
     }
 
+    // Spawns the referenced objects into the scene
     public static void BakeInstance(PrefabInstance pi)
     {
         if (!pi.prefab || !pi.enabled)
