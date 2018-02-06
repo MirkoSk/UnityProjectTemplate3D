@@ -5,6 +5,12 @@ using UnityEditor.Callbacks;
 #endif
 using System.Collections.Generic;
 
+/// <summary>
+/// Allows for Nested Prefabs. The script stores a reference to a prefab and displays it's Meshes in EditMode.
+/// When you enter PlayMode, build the project or the script gets instantiated in PlayMode, it spawns the linked prefab into the scene.
+/// 
+/// Author: Nicholas Francis (http://framebunker.com/blog/poor-mans-nested-prefabs/), modified by Mirko Skroch
+/// </summary>
 [ExecuteInEditMode]
 public class PrefabInstance : MonoBehaviour
 {
@@ -51,12 +57,15 @@ public class PrefabInstance : MonoBehaviour
 
         foreach (MeshRenderer mr in source.GetComponentsInChildren(typeof(MeshRenderer), true))
         {
-            things.Add(new Thingy()
+            if (mr.enabled)
             {
-                mesh = mr.GetComponent<MeshFilter>().sharedMesh,
-                matrix = baseMat * mr.transform.localToWorldMatrix,
-                materials = new List<Material>(mr.sharedMaterials)
-            });
+                things.Add(new Thingy()
+                {
+                    mesh = mr.GetComponent<MeshFilter>().sharedMesh,
+                    matrix = baseMat * mr.transform.localToWorldMatrix,
+                    materials = new List<Material>(mr.sharedMaterials)
+                });
+            }
         }
 
         foreach (PrefabInstance pi in source.GetComponentsInChildren(typeof(PrefabInstance), true))
