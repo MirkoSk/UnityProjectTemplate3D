@@ -15,10 +15,14 @@ namespace NGlow
         #region Variable Declarations
         // Visible in Inspector
         [Range(1f, 4f)] [SerializeField] float gravityMultiplier = 2f;
-        [SerializeField] float groundCheckDistance = 0.1f;
+        [SerializeField] float groundCheckDistance = 0.2f;
         [SerializeField] float animSpeedMultiplier = 1f;
+        [SerializeField] float stationaryTurnSpeed = 5f;
+        [SerializeField] float movingTurnSpeed = 10f;
+        [SerializeField] float jumpPower = 6f;
 
         // Private Variables
+        float rotateSpeed;
         bool grounded;
         Vector3 groundNormal;
         new Rigidbody rigidbody;
@@ -49,13 +53,18 @@ namespace NGlow
         public void Move(Vector3 direction, bool jump)
         {
             if (direction.magnitude > 1f) direction.Normalize();
-            direction = transform.InverseTransformDirection(direction);
             CheckGroundStatus();
             direction = Vector3.ProjectOnPlane(direction, groundNormal);
 
+            Turn(direction);
+
             // control and velocity handling is different when grounded and airborne:
-            if (!grounded)
+            if (grounded)
             {
+                HandleGroundedMovement(jump);
+            }
+            else
+            { 
                 HandleAirborneMovement();
             }
 
@@ -115,11 +124,41 @@ namespace NGlow
         }
 
 
+        void HandleGroundedMovement(bool jump)
+        {
+            // check whether conditions are right to allow a jump:
+            if (jump && animator.GetCurrentAnimatorStateInfo(0).IsName("Grounded"))
+            {
+                // jump!
+                rigidbody.velocity = new Vector3(rigidbody.velocity.x, jumpPower, rigidbody.velocity.z);
+                grounded = false;
+                animator.applyRootMotion = false;
+            }
+        }
+
+
         void HandleAirborneMovement()
         {
-            // apply extra gravity from multiplier
-            Vector3 extraGravityForce = (Physics.gravity * gravityMultiplier) - Physics.gravity;
-            rigidbody.AddForce(extraGravityForce);
+            if (rigidbody.velocity.y <= 0)
+            {
+                // apply extra gravity from multiplier
+                Vector3 extraGravityForce = (Physics.gravity * gravityMultiplier) - Physics.gravity;
+                rigidbody.AddForce(extraGravityForce);
+            }
+        }
+
+
+        void Turn(Vector3 targetDirection)
+        {
+            // Interpolate between the turn speeds
+            float forwardAmount = targetDirection.magnitude;
+            rotateSpeed = Mathf.Lerp(stationaryTurnSpeed, movingTurnSpeed, animator.GetFloat(forwardSpeedHash));
+
+            if (targetDirection.magnitude != 0)
+            {
+                Quaternion targetRotation = Quaternion.LookRotation(targetDirection, transform.up);
+                transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, rotateSpeed * Time.deltaTime);
+            }
         }
         #endregion
     }
