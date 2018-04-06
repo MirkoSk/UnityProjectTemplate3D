@@ -2582,9 +2582,9 @@ Rigidbody:
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 1
+  m_Interpolate: 0
   m_Constraints: 112
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!95 &95446851881153854
 Animator:
   serializedVersion: 3
@@ -2618,7 +2618,7 @@ MonoBehaviour:
   animSpeedMultiplier: 1
   stationaryTurnSpeed: 5
   movingTurnSpeed: 10
-  jumpPower: 4
+  jumpPower: 5
 --- !u!114 &114939314743370986
 MonoBehaviour:
   m_ObjectHideFlags: 1
