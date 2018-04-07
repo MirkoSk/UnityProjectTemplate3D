@@ -20,7 +20,7 @@ namespace NGlow
         [SerializeField] float jumpPower = 6f;
 
         // Private Variables
-        float rotateSpeed;
+        float turnSpeed;
         bool grounded;
         Vector3 groundNormal;
         new Rigidbody rigidbody;
@@ -52,7 +52,9 @@ namespace NGlow
         {
             if (direction.magnitude > 1f) direction.Normalize();
             CheckGroundStatus();
-            direction = Vector3.ProjectOnPlane(direction, groundNormal);
+            // Make the character run slower on steep surfaces
+            float groundAngle = Mathf.Abs(90 - Vector3.Angle(transform.position, groundNormal));
+            direction *= Mathf.Clamp(1 - (groundAngle / 45f), 0f, 1f);
 
             Turn(direction);
 
@@ -137,9 +139,9 @@ namespace NGlow
 
         void HandleAirborneMovement()
         {
+            // Apply extra gravity when falling (feels more natural)
             if (rigidbody.velocity.y <= 0)
             {
-                // apply extra gravity from multiplier
                 Vector3 extraGravityForce = (Physics.gravity * gravityMultiplier) - Physics.gravity;
                 rigidbody.AddForce(extraGravityForce);
             }
@@ -150,12 +152,12 @@ namespace NGlow
         {
             // Interpolate between the turn speeds
             float forwardAmount = targetDirection.magnitude;
-            rotateSpeed = Mathf.Lerp(stationaryTurnSpeed, movingTurnSpeed, animator.GetFloat(forwardSpeedHash));
+            turnSpeed = Mathf.Lerp(stationaryTurnSpeed, movingTurnSpeed, forwardAmount);
 
-            if (targetDirection.magnitude != 0)
+            if (targetDirection != Vector3.zero && targetDirection != transform.forward)
             {
-                Quaternion targetRotation = Quaternion.LookRotation(targetDirection, transform.up);
-                transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, rotateSpeed * Time.deltaTime);
+                Quaternion targetRotation = Quaternion.LookRotation(targetDirection, Vector3.up);
+                transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, turnSpeed * Time.deltaTime);
             }
         }
         #endregion

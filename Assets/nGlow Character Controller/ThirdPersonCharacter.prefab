@@ -2050,8 +2050,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1304138752326276}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.968, z: 0}
+  m_LocalRotation: {x: 0, y: -1, z: 0, w: -0.00000010430813}
+  m_LocalPosition: {x: 25, y: 0, z: 25}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4108952337874156}
@@ -2614,11 +2614,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gravityMultiplier: 2
-  groundCheckDistance: 0.2
+  groundCheckDistance: 0.3
   animSpeedMultiplier: 1
   stationaryTurnSpeed: 5
   movingTurnSpeed: 10
-  jumpPower: 5
+  jumpPower: 6
 --- !u!114 &114939314743370986
 MonoBehaviour:
   m_ObjectHideFlags: 1
