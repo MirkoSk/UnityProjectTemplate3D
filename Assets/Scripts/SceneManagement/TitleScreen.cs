@@ -2,27 +2,33 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>
-/// 
-/// </summary>
-public class TitleScreen : MonoBehaviour {
+namespace SceneManagement
+{
+    /// <summary>
+    /// 
+    /// </summary>
+    public class TitleScreen : MonoBehaviour
+    {
 
-    #region Variable Declarations
-    [SerializeField] float titleScreenDuration = 3f;
-	#endregion
-	
-	
-	
-	#region Unity Event Functions
-	private void Start () {
-		
-	}
-	
-	private void Update () {
-        if (Time.timeSinceLevelLoad >= titleScreenDuration)
+        #region Variable Declarations
+        [SerializeField] float titleScreenDuration = 3f;
+        #endregion
+
+
+
+        #region Unity Event Functions
+        private void Start()
         {
-            GameManager.Instance.ChangeGameState(GameState.MainMenu);
+
         }
+
+        private void Update()
+        {
+            if (Time.timeSinceLevelLoad >= titleScreenDuration)
+            {
+                SceneManager.Instance.ChangeGameState(GameState.MainMenu);
+            }
+        }
+        #endregion
     }
-	#endregion
 }

@@ -3,28 +3,35 @@ using System.Collections.Generic;
 using UnityEngine;
 using Pixelplacement;
 
-/// <summary>
-/// 
-/// </summary>
-public class CreditsState : State {
+namespace SceneManagement
+{
+    /// <summary>
+    /// 
+    /// </summary>
+    public class CreditsState : State
+    {
 
-    #region Variable Declarations
+        #region Variable Declarations
 
-    #endregion
+        #endregion
 
 
 
-    #region Unity Event Functions
-    private void OnEnable() {
-        GameManager.Instance.LoadLevel(Constants.SCENE_CREDITS);
+        #region Unity Event Functions
+        private void OnEnable()
+        {
+            SceneManager.Instance.LoadLevel(Constants.SCENE_CREDITS);
+        }
+
+        private void OnDisable()
+        {
+
+        }
+
+        private void Update()
+        {
+
+        }
+        #endregion
     }
-
-    private void OnDisable() {
-
-    }
-
-    private void Update() {
-
-    }
-    #endregion
 }

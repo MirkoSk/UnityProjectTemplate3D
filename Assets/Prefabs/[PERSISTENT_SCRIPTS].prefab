@@ -104,7 +104,7 @@ GameObject:
   - component: {fileID: 114460274371670252}
   - component: {fileID: 114702090356297462}
   m_Layer: 0
-  m_Name: GameState
+  m_Name: SceneState
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -362,16 +362,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e0b24e2f2ad54cc09940c320ed3cf4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  states:
-  - None
-  - TitleScreen
-  - MainMenu
-  - Intro
-  - Play
-  - Credits
-  defaultStateIndex: 0
-  defaultStateName: None
+  defaultState: {fileID: 0}
   currentState: {fileID: 0}
+  _unityEventsFolded: 0
   verbose: 1
   allowReentry: 0
   returnToDefaultOnDisable: 0

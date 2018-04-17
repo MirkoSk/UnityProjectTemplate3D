@@ -2,30 +2,33 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>
-/// 
-/// </summary>
-public class Intro : MonoBehaviour
+namespace SceneManagement
 {
-
-    #region Variable Declarations
-    [SerializeField] float introDuration = 3f;
-    #endregion
-
-
-
-    #region Unity Event Functions
-    private void Start()
+    /// <summary>
+    /// 
+    /// </summary>
+    public class Intro : MonoBehaviour
     {
 
-    }
+        #region Variable Declarations
+        [SerializeField] float introDuration = 3f;
+        #endregion
 
-    private void Update()
-    {
-        if (Time.timeSinceLevelLoad >= introDuration)
+
+
+        #region Unity Event Functions
+        private void Start()
         {
-            GameManager.Instance.ChangeGameState(GameState.Play);
+
         }
+
+        private void Update()
+        {
+            if (Time.timeSinceLevelLoad >= introDuration)
+            {
+                SceneManager.Instance.ChangeGameState(GameState.Play);
+            }
+        }
+        #endregion
     }
-    #endregion
 }

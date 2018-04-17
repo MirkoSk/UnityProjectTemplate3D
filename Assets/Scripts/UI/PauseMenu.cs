@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using Pixelplacement;
+using SceneManagement;
 
 public class PauseMenu : MonoBehaviour {
 
@@ -58,10 +59,10 @@ public class PauseMenu : MonoBehaviour {
     }
 
     public void ReturnToMainMenu() {
-        GameManager.Instance.ChangeGameState(GameState.MainMenu);
+        SceneManager.Instance.ChangeGameState(GameState.MainMenu);
     }
 
     public void ExitGame() {
-        GameManager.Instance.ExitGame();
+        SceneManager.Instance.ExitGame();
     }
 }
