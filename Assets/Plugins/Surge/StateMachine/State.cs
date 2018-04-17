@@ -18,7 +18,6 @@ namespace Pixelplacement
 		/// <summary>
 		/// Gets a value indicating whether this instance is the first state in this state machine.
 		/// </summary>
-		/// <value><c>true</c> if this instance is first; otherwise, <c>false</c>.</value>
 		public bool IsFirst
 		{
 			get
@@ -30,7 +29,6 @@ namespace Pixelplacement
 		/// <summary>
 		/// Gets a value indicating whether this instance is the last state in this state machine.
 		/// </summary>
-		/// <value><c>true</c> if this instance is last; otherwise, <c>false</c>.</value>
 		public bool IsLast
 		{
 			get
@@ -42,27 +40,42 @@ namespace Pixelplacement
 		/// <summary>
 		/// Gets or sets the state machine.
 		/// </summary>
-		/// <value>The state machine.</value>
 		public StateMachine StateMachine
 		{
-			get;
-			set;
+			get
+			{
+				if (_stateMachine == null)
+				{
+					_stateMachine = transform.parent.GetComponent<StateMachine>();
+					if (_stateMachine == null)
+					{
+						Debug.LogError("States must be the child of a StateMachine to operate.");
+						return null;
+					}
+				}
+
+				return _stateMachine;
+			}
 		}
 		#endregion
 
-		#region Init
-		void Awake ()
-		{
-			if (transform.parent == null) return;
-			StateMachine = transform.parent.GetComponent<StateMachine> ();
-		}
+		#region Private Variables
+		StateMachine _stateMachine;
 		#endregion
 
 		#region Public Methods
 		/// <summary>
 		/// Changes the state.
 		/// </summary>
-		public void ChangeState (GameObject state)
+		public void ChangeState(int childIndex)
+        {
+            StateMachine.ChangeState(childIndex);
+        }
+
+        /// <summary>
+        /// Changes the state.
+        /// </summary>
+        public void ChangeState (GameObject state)
 		{
 			StateMachine.ChangeState (state.name);
 		}

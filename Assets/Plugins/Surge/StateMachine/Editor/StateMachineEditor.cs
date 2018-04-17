@@ -25,97 +25,99 @@ namespace Pixelplacement
 		void OnEnable()
 		{
 			_target = target as StateMachine;
-			if (!Application.isPlaying) _target.InitializeStates ();
 		}
 		#endregion
 
 		#region Inspector GUI
 		public override void OnInspectorGUI()
 		{
-			DrawDefaultInspector ();
-
 			//if no states are found:
-			if (_target.states == null || _target.states.Length == 0)
+			if (_target.transform.childCount == 0)
 			{
-				DrawNotification ("Add child Gameobjects for this State Machine to control.", Color.yellow);
+				DrawNotification("Add child Gameobjects for this State Machine to control.", Color.yellow);
 				return;
 			}
 
-			//change buttons or default state selection:
-			if (EditorApplication.isPlaying) 
+			//change buttons:
+			if (EditorApplication.isPlaying)
 			{
-				DrawStateChangeButtons ();
-			}else{
-				DrawDefaultStateSelector ();
+				DrawStateChangeButtons();
 			}
 
-			//store new default if one was chosen:
-			StoreNewDefaultState ();
+			serializedObject.Update();
+
+			EditorGUILayout.PropertyField(serializedObject.FindProperty("defaultState"));
+			EditorGUILayout.PropertyField(serializedObject.FindProperty("verbose"));
+			EditorGUILayout.PropertyField(serializedObject.FindProperty("allowReentry"));
+			EditorGUILayout.PropertyField(serializedObject.FindProperty("returnToDefaultOnDisable"));
+
+			//fold events:
+			_target._unityEventsFolded = EditorGUILayout.Foldout(_target._unityEventsFolded, "Unity Events", true);
+			if (_target._unityEventsFolded)
+			{
+				EditorGUILayout.PropertyField(serializedObject.FindProperty("OnStateExited"));
+				EditorGUILayout.PropertyField(serializedObject.FindProperty("OnStateEntered"));
+				EditorGUILayout.PropertyField(serializedObject.FindProperty("OnFirstStateEntered"));
+				EditorGUILayout.PropertyField(serializedObject.FindProperty("OnFirstStateExited"));
+				EditorGUILayout.PropertyField(serializedObject.FindProperty("OnLastStateEntered"));
+				EditorGUILayout.PropertyField(serializedObject.FindProperty("OnLastStateExited"));
+			}
+
+			serializedObject.ApplyModifiedProperties();
+
+			if (!EditorApplication.isPlaying)
+			{
+				DrawHideAllButton();
+			}
 		}
 		#endregion
 
 		#region GUI Draw Methods
 		void DrawStateChangeButtons()
 		{
-			if (_target.states.Length == 1) return;
+			if (_target.transform.childCount == 0) return;
 			Color currentColor = GUI.color;
-			for (int i = 1; i < _target.states.Length; i++)
+			for (int i = 0; i < _target.transform.childCount; i++)
 			{
-				if (_target.currentState != null && _target.states[i] == _target.currentState.name) 
+				GameObject current = _target.transform.GetChild(i).gameObject;
+
+				if (_target.currentState != null && current == _target.currentState)
 				{
 					GUI.color = Color.green;
-				}else{
+				}
+				else
+				{
 					GUI.color = Color.white;
 				}
 
-				if (GUILayout.Button (_target.states[i])) _target.ChangeState (_target.states[i]);
+				if (GUILayout.Button(current.name)) _target.ChangeState(current);
 			}
 			GUI.color = currentColor;
-			if (GUILayout.Button ("Exit")) _target.Exit ();
+			if (GUILayout.Button("Exit")) _target.Exit();
 		}
 
-		void DrawDefaultStateSelector ()
-		{
-			_target.defaultStateIndex = EditorGUILayout.Popup ("Default State on Start:", _target.defaultStateIndex, _target.states);
-			DrawHideAllButton ();
-			if (!_target.CleanSetup) DrawNotification ("More than one child Gameobject has the same name: Please fix this to allow access to all child states.", Color.yellow);
-		}
-
-		void DrawHideAllButton ()
+		void DrawHideAllButton()
 		{
 			GUI.color = Color.red;
-			GUILayout.BeginHorizontal ();
-			GUILayout.FlexibleSpace ();
-			if (GUILayout.Button ("Hide All")) 
+			GUILayout.BeginHorizontal();
+			if (GUILayout.Button("Hide All"))
 			{
-				Undo.RegisterCompleteObjectUndo (_target.transform, "Hide All");
+				Undo.RegisterCompleteObjectUndo(_target.transform, "Hide All");
 				foreach (Transform item in _target.transform)
 				{
-					item.gameObject.SetActive (false);
+					item.gameObject.SetActive(false);
 				}
 			}
-			GUILayout.FlexibleSpace ();
-			GUILayout.EndHorizontal ();
+			GUILayout.EndHorizontal();
+			GUI.color = Color.white;
 		}
 
-		void DrawNotification (string message, Color color)
+		void DrawNotification(string message, Color color)
 		{
 			Color currentColor = GUI.color;
 			GUI.color = color;
-			EditorGUILayout.HelpBox (message, MessageType.Warning);
+			EditorGUILayout.HelpBox(message, MessageType.Warning);
 			GUI.color = currentColor;
-		}
-		#endregion
-
-		#region Private Methods
-		void StoreNewDefaultState ()
-		{
-			if (GUI.changed)
-			{
-				Undo.RecordObject (_target, "Change default state");
-				_target.defaultStateName = _target.states [_target.defaultStateIndex];
-
-			}
 		}
 		#endregion
 	}

@@ -13,7 +13,7 @@ using UnityEngine;
 
 namespace Pixelplacement
 {
-	public class CurveDetail
+	public struct CurveDetail
 	{
 		#region Public Variables
 		public int currentCurve;

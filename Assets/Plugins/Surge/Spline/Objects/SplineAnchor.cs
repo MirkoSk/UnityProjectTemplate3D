@@ -34,17 +34,44 @@ namespace Pixelplacement
 
 		public Transform Anchor
 		{
-			get; private set;
+			get
+			{
+				if (!_initialized) Initialize();
+				return _anchor;
+			}
+
+			private set
+			{
+				_anchor = value;
+			}
 		}
 
 		public Transform InTangent
 		{
-			get; private set;
+			get
+			{
+				if (!_initialized) Initialize();
+				return _inTangent;
+			}
+
+			private set
+			{
+				_inTangent = value;
+			}
 		}
 
 		public Transform OutTangent
 		{
-			get; private set;
+			get
+			{
+				if (!_initialized) Initialize();
+				return _outTangent;
+			}
+
+			private set
+			{
+				_outTangent = value;
+			}
 		}
 		#endregion
 
@@ -57,6 +84,9 @@ namespace Pixelplacement
 		Vector3 _previousOutPosition;
 		Vector3 _previousAnchorPosition;
 		Bounds _skinnedBounds;
+		Transform _anchor;
+		Transform _inTangent;
+		Transform _outTangent;
 		#endregion
 
 		#region Init
@@ -76,9 +106,6 @@ namespace Pixelplacement
 			if (!_initialized)
 			{
 				Initialize ();
-
-				//flag initialization:
-				_initialized = true;
 			}
 
 			//override any skinned mesh bounds changes:
@@ -156,6 +183,8 @@ namespace Pixelplacement
 		#region Private Methods
 		void Initialize ()
 		{
+			_initialized = true;
+
 			//grabs references:
 			InTangent = transform.GetChild (0);
 			OutTangent = transform.GetChild (1);

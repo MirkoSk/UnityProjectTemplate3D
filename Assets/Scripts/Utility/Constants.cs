@@ -10,6 +10,9 @@ public class Constants
     #region Inputs
     public static readonly string INPUT_HORIZONTAL = "Horizontal";
     public static readonly string INPUT_VERTICAL = "Vertical";
+    public static readonly string INPUT_MOUSE_X = "Mouse X";
+    public static readonly string INPUT_MOUSE_Y = "Mouse Y";
+    public static readonly string INPUT_JUMP = "Jump";
     public static readonly string INPUT_INTERACT = "Interact";
     public static readonly string INPUT_SUBMIT = "Submit";
     public static readonly string INPUT_CANCEL = "Cancel";

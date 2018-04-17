@@ -31,15 +31,30 @@ namespace Pixelplacement
 		public override void OnInspectorGUI()
 		{
 			DrawDefaultInspector ();
-			if (Application.isPlaying) return;
-			GUILayout.BeginHorizontal ();
-			DrawSoloButton ();
-			DrawHideAllButton ();
-			GUILayout.EndHorizontal ();
+			if (!Application.isPlaying)
+			{
+				GUILayout.BeginHorizontal();
+				DrawSoloButton();
+				DrawHideAllButton();
+				GUILayout.EndHorizontal();
+			}
+			else
+			{
+				DrawChangeStateButton();
+			}
 		}
 		#endregion
 
-		#region GUI Drw Methods
+		#region GUI Draw Methods
+		void DrawChangeStateButton ()
+		{
+			GUI.color = Color.green;
+			if (GUILayout.Button("Change State"))
+			{
+				_target.ChangeState(_target.gameObject);
+			}
+		}
+
 		void DrawHideAllButton ()
 		{
 			GUI.color = Color.red;

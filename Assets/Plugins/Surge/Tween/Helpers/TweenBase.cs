@@ -36,15 +36,24 @@ namespace Pixelplacement.TweenSystem
 
 		#region Protected Variables
 		protected float _startTime;
+		private float _timeVested;
 		#endregion
 
 		#region Public Methods
 		/// <summary>
-		/// Stop the tween.
+		/// Stop/pauses the tween.
 		/// </summary>
 		public void Stop ()
 		{
 			Status = Tween.TweenStatus.Stopped;
+			if (ObeyTimescale)
+			{
+				_timeVested = Time.time - _startTime;
+			}
+			else
+			{
+				_timeVested = Time.realtimeSinceStartup - _startTime;
+			}
 		}
 
 		/// <summary>
@@ -52,7 +61,6 @@ namespace Pixelplacement.TweenSystem
 		/// </summary>
 		public void Start ()
 		{
-			_startTime = Time.realtimeSinceStartup;
 			if (ObeyTimescale) 
 			{
 				_startTime = Time.time;
@@ -65,6 +73,29 @@ namespace Pixelplacement.TweenSystem
 				Status = Tween.TweenStatus.Running;
 				Operation (0);
 				Tween.Instance.ExecuteTween (this);
+			}
+		}
+
+		/// <summary>
+		/// Resumes a stopped/paused tween.
+		/// </summary>
+		public void Resume()
+		{
+			if (Status != Tween.TweenStatus.Stopped) return;
+
+			if (ObeyTimescale)
+			{
+				_startTime = Time.time - _timeVested;
+			}
+			else
+			{
+				_startTime = Time.realtimeSinceStartup - _timeVested;
+			}
+			
+			if (Status == Tween.TweenStatus.Stopped)
+			{
+				Status = Tween.TweenStatus.Running;
+				Tween.Instance.ExecuteTween(this);
 			}
 		}
 

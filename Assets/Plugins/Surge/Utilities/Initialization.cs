@@ -14,7 +14,7 @@ using System.Reflection;
 
 namespace Pixelplacement
 {
-	public class Initialization : MonoBehaviour 
+	public class Initialization : MonoBehaviour
 	{
 		#region Private Variables
 		StateMachine _stateMachine;
@@ -22,74 +22,74 @@ namespace Pixelplacement
 		#endregion
 
 		#region Init
-		void Awake () 
+		void Awake()
 		{
 			//singleton initialization:
-			InitializeSingleton ();
+			InitializeSingleton();
 
 			//values:
-			_stateMachine = GetComponent<StateMachine> ();
-			_displayObject = GetComponent<DisplayObject> ();
+			_stateMachine = GetComponent<StateMachine>();
+			_displayObject = GetComponent<DisplayObject>();
 
 			//display object initialization:
-			if (_displayObject != null) _displayObject.Register ();
+			if (_displayObject != null) _displayObject.Register();
 
 			//state machine initialization:
-			if (_stateMachine != null) _stateMachine.InitializeStates ();
+			if (_stateMachine != null) _stateMachine.Initialize();
 		}
 
-		void Start ()
+		void Start()
 		{
 			//state machine start:
-			if (_stateMachine != null) _stateMachine.StartMachine ();
+			if (_stateMachine != null) _stateMachine.StartMachine();
 		}
 		#endregion
 
 		#region Deinit
-		void OnDisable ()
+		void OnDisable()
 		{
 			if (_stateMachine != null)
 			{
-				if (!_stateMachine.returnToDefaultOnDisable || _stateMachine.defaultStateName == "None") return;
+				if (!_stateMachine.returnToDefaultOnDisable || _stateMachine.defaultState == null) return;
 
 				if (_stateMachine.currentState == null)
 				{
-					_stateMachine.ChangeState (_stateMachine.defaultStateName);
+					_stateMachine.ChangeState(_stateMachine.defaultState);
 					return;
 				}
 
-				if (_stateMachine.currentState.name != _stateMachine.defaultStateName)
+				if (_stateMachine.currentState != _stateMachine.defaultState)
 				{
-					_stateMachine.ChangeState (_stateMachine.defaultStateName);
+					_stateMachine.ChangeState(_stateMachine.defaultState);
 				}
 			}
 		}
 		#endregion
 
 		#region Private Methods
-		void InitializeSingleton ()
+		void InitializeSingleton()
 		{
-			foreach (Component item in GetComponents<Component> ()) 
+			foreach (Component item in GetComponents<Component>())
 			{
 				string baseType;
 
-				#if NETFX_CORE
+#if NETFX_CORE
 				baseType = item.GetType ().GetTypeInfo ().BaseType.ToString ();
-				#else
-				baseType = item.GetType ().BaseType.ToString ();
-				#endif
+#else
+				baseType = item.GetType().BaseType.ToString();
+#endif
 
-				if (baseType.Contains ("Singleton") && baseType.Contains ("Pixelplacement"))
+				if (baseType.Contains("Singleton") && baseType.Contains("Pixelplacement"))
 				{
 					MethodInfo m;
 
-					#if NETFX_CORE
+#if NETFX_CORE
 					m = item.GetType ().GetTypeInfo ().BaseType.GetMethod ("Initialize", BindingFlags.NonPublic | BindingFlags.Instance);
-					#else
-					m = item.GetType ().BaseType.GetMethod ("Initialize", BindingFlags.NonPublic | BindingFlags.Instance);
-					#endif
+#else
+					m = item.GetType().BaseType.GetMethod("Initialize", BindingFlags.NonPublic | BindingFlags.Instance);
+#endif
 
-					m.Invoke (item, new Component[] {item});
+					m.Invoke(item, new Component[] { item });
 					break;
 				}
 			}
