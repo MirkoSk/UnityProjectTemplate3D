@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Pixelplacement;
+using SceneManagement;
 
 /// <summary>
 /// 
@@ -16,7 +17,7 @@ public class PlayState : State {
 
     #region Unity Event Functions
     private void OnEnable() {
-        
+        SceneManager.Instance.LoadLevel(sceneToLoad);
     }
 
     private void OnDisable() {
