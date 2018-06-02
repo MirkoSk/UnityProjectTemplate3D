@@ -46,6 +46,22 @@ namespace Pixelplacement
 
 			serializedObject.Update();
 
+			DrawPropertiesExcluding(serializedObject, new string[] {
+				"currentState",
+				"_unityEventsFolded",
+				"defaultState",
+				"verbose",
+				"allowReentry",
+				"returnToDefaultOnDisable",
+				"Unity Events",
+				"OnStateExited",
+				"OnStateEntered",
+				"OnFirstStateEntered",
+				"OnFirstStateExited",
+				"OnLastStateEntered",
+				"OnLastStateExited"
+			});
+
 			EditorGUILayout.PropertyField(serializedObject.FindProperty("defaultState"));
 			EditorGUILayout.PropertyField(serializedObject.FindProperty("verbose"));
 			EditorGUILayout.PropertyField(serializedObject.FindProperty("allowReentry"));
