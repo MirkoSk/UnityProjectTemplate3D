@@ -26,7 +26,7 @@ namespace SceneManagement
         {
             if (Time.timeSinceLevelLoad >= introDuration)
             {
-                SceneManager.Instance.ChangeGameState(GameState.Play);
+                SceneManager.Instance.LoadLevel(Constants.SCENE_LEVEL01);
             }
         }
         #endregion

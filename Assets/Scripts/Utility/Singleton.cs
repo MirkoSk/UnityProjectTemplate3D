@@ -5,11 +5,12 @@ namespace Utility
     /// <summary>
     /// Generic Singleton class.
     /// </summary>
-    public abstract class Singleton<T> : MonoBehaviour
+    public abstract class Singleton<T> : SubscribedBehaviour
     {
         #region Private Variables
-        static Singleton<T> instance;
+        static T instance;
 
+        [Header("Singleton")]
         [Tooltip("Defines what happens with duplicate classes, when there's already one instance of this Singleton. Either destroy the script alone or the gameObject.")]
         [SerializeField] bool destroyGameObject = false;
         #endregion
@@ -17,14 +18,14 @@ namespace Utility
 
 
         #region Public Properties
-        public static Singleton<T> Instance
+        public static T Instance
 		{
 			get
 			{
 				if (instance == null) 
 				{
 					Debug.LogError ("Singleton not registered! Make sure the GameObject running your singleton is active in your scene.");
-					return null;
+					return default(T);
 				}
 				return instance;
 			}
@@ -33,17 +34,17 @@ namespace Utility
 
 
 
-		#region Unity Event Functions
+		#region Public Functions
 		/// <summary>
 		/// Registers the singleton instance.
 		/// </summary>
-		private void Awake ()
+		protected void RegisterSingleton (T newInstance)
 		{
             if (instance == null)
             {
-                instance = this;
+                instance = newInstance;
             }
-            else if (instance != this)
+            else if (!instance.Equals(newInstance))
             {
                 if (!destroyGameObject)
                 {
@@ -55,10 +56,6 @@ namespace Utility
                 }
             }
 		}
-        /// <summary>
-        /// Awake function for all inheriting classes.
-        /// </summary>
-        protected virtual void InheritedAwake() { }
 		#endregion
 	}
 }

@@ -26,7 +26,7 @@ namespace SceneManagement
         {
             if (Time.timeSinceLevelLoad >= titleScreenDuration)
             {
-                SceneManager.Instance.ChangeGameState(GameState.MainMenu);
+                SceneManager.Instance.LoadLevel(Constants.SCENE_MAIN_MENU);
             }
         }
         #endregion

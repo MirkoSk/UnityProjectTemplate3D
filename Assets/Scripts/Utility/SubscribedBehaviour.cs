@@ -9,7 +9,7 @@ using UnityEngine;
 abstract public class SubscribedBehaviour : MonoBehaviour {
 
     // Subscribing to all custom game events
-    protected void OnEnable() {
+    private void OnEnable() {
         GameEvents.LevelCompleted += OnLevelCompleted;
         SubscribedOnEnable();
     }
@@ -17,7 +17,7 @@ abstract public class SubscribedBehaviour : MonoBehaviour {
     virtual protected void SubscribedOnEnable() { }
 
     // Unsubscribing from all custom game events
-    protected void OnDisable() {
+    private void OnDisable() {
         GameEvents.LevelCompleted -= OnLevelCompleted;
         SubscribedOnDisable();
     }

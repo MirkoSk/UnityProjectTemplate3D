@@ -8,7 +8,8 @@ using UnityEngine.SceneManagement;
 /// <summary>
 /// Class providing functions to make an XBox Controller Rumble
 /// </summary>
-public class Rumble : MonoBehaviour {
+public class Rumble : MonoBehaviour
+{
 
     #region Variable Declarations
     Coroutine rumbleCoroutine;
@@ -20,7 +21,8 @@ public class Rumble : MonoBehaviour {
 
     #region Unity Event Functions
     //Awake is always called before any Start functions
-    void Awake() {
+    void Awake()
+    {
         //Check if instance already exists
         if (Instance == null)
 
@@ -35,11 +37,13 @@ public class Rumble : MonoBehaviour {
         }
     }
 
-    private void OnEnable() {
+    private void OnEnable()
+    {
         SceneManager.sceneLoaded += OnLevelFinishedLoading;
     }
 
-    private void OnDisable() {
+    private void OnDisable()
+    {
         StopAllRumble();
         SceneManager.sceneLoaded -= OnLevelFinishedLoading;
     }
@@ -52,12 +56,15 @@ public class Rumble : MonoBehaviour {
     /// Method to stop the rumble of all available controllers.
     /// Is called OnDisable(), to prevent the controller to keep on rumbling after exiting the game.
     /// </summary>
-    public void StopAllRumble() {
-        if (rumbleCoroutine != null) {
+    public void StopAllRumble()
+    {
+        if (rumbleCoroutine != null)
+        {
             StopCoroutine(rumbleCoroutine);
             rumbleCoroutine = null;
         }
-        for (int i = 0; i < Enum.GetNames(typeof(PlayerIndex)).Length; i++) {
+        for (int i = 0; i < Enum.GetNames(typeof(PlayerIndex)).Length; i++)
+        {
             GamePad.SetVibration((PlayerIndex)i, 0f, 0f);
         }
     }
@@ -66,8 +73,10 @@ public class Rumble : MonoBehaviour {
     /// Controller-Rumble for one second with both motors constantly at max velocity.
     /// </summary>
     /// <param name="playerIndex">PlayerIndex of the controller that shall rumble.</param>
-    public void RumbleConstant(PlayerIndex playerIndex) {
-        if (CheckCallForValidity()) {
+    public void RumbleConstant(PlayerIndex playerIndex)
+    {
+        if (CheckCallForValidity())
+        {
             rumbleCoroutine = StartCoroutine(RumbleConstantCoroutine(playerIndex, 1f, 1f, 1f));
         }
     }
@@ -77,8 +86,10 @@ public class Rumble : MonoBehaviour {
     /// </summary>
     /// <param name="playerIndex">PlayerIndex of the controller that shall rumble.</param>
     /// <param name="duration">Duration to rumble</param>
-    public void RumbleConstant(PlayerIndex playerIndex, float duration) {
-        if (CheckCallForValidity()) {
+    public void RumbleConstant(PlayerIndex playerIndex, float duration)
+    {
+        if (CheckCallForValidity())
+        {
             rumbleCoroutine = StartCoroutine(RumbleConstantCoroutine(playerIndex, duration, 1f, 1f));
         }
     }
@@ -90,8 +101,10 @@ public class Rumble : MonoBehaviour {
     /// <param name="duration">Duration to rumble</param>
     /// <param name="leftMotor">Strength of the left motor (heavy rumble). Range from 0 to 1.</param>
     /// <param name="rightMotor">Strength of the right motor (light rumble). Range from 0 to 1.</param>
-    public void RumbleConstant(PlayerIndex playerIndex, float duration, float leftMotor, float rightMotor) {
-        if (CheckCallForValidity()) {
+    public void RumbleConstant(PlayerIndex playerIndex, float duration, float leftMotor, float rightMotor)
+    {
+        if (CheckCallForValidity())
+        {
             rumbleCoroutine = StartCoroutine(RumbleConstantCoroutine(playerIndex, duration, leftMotor, rightMotor));
         }
     }
@@ -100,15 +113,18 @@ public class Rumble : MonoBehaviour {
 
 
     #region Private Functions
-    private bool CheckCallForValidity() {
-        if (rumbleCoroutine != null) {
+    private bool CheckCallForValidity()
+    {
+        if (rumbleCoroutine != null)
+        {
             return false;
         }
 
         return true;
     }
 
-    private void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode) {
+    private void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode)
+    {
         StopAllRumble();
     }
     #endregion
@@ -116,7 +132,8 @@ public class Rumble : MonoBehaviour {
 
 
     #region Coroutines
-    IEnumerator RumbleConstantCoroutine(PlayerIndex playerIndex, float duration, float leftMotor, float rightMotor) {
+    IEnumerator RumbleConstantCoroutine(PlayerIndex playerIndex, float duration, float leftMotor, float rightMotor)
+    {
         GamePad.SetVibration(playerIndex, leftMotor, rightMotor);
         yield return new WaitForSecondsRealtime(duration);
         GamePad.SetVibration(playerIndex, 0f, 0f);
