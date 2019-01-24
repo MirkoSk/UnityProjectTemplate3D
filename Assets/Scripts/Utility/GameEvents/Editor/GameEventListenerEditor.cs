@@ -30,6 +30,7 @@ public class GameEventListenerEditor : Editor
                 // Logic for what Methods to Display
                 Component component = null;
                 List<MethodInfo> methods = new List<MethodInfo>();
+                List<int> methodIDs = new List<int>();
                 string[] popupOptions;
                 MethodInfo[] tempMethods = null;
                 if (script.linkedMethods[index].component != null)
@@ -49,32 +50,48 @@ public class GameEventListenerEditor : Editor
                     }
                     if (script.gameEvent.parameter1Type.type != null && script.gameEvent.parameter2Type.type == null)
                     {
-                        foreach(MethodInfo info in tempMethods)
+                        for(int i = 0; i < tempMethods.Length; i++)
                         {
-                            if(info.GetParameters().Length == 1 && info.GetParameters()[0].ParameterType == script.gameEvent.parameter1Type.type)
+                            MethodInfo info = tempMethods[i];
+                            if (info.GetParameters().Length == 1 && info.GetParameters()[0].ParameterType == script.gameEvent.parameter1Type.type)
+                            {
                                 methods.Add(info);
+                                methodIDs.Add(i);
+                            }
                         }
                     }else if(script.gameEvent.parameter1Type.type != null && script.gameEvent.parameter2Type.type != null && script.gameEvent.parameter3Type.type == null)
                     {
-                        foreach(MethodInfo info in tempMethods)
+                        for(int i = 0; i < tempMethods.Length; i++)
                         {
+                            MethodInfo info = tempMethods[i];
                             if(info.GetParameters().Length == 2 && info.GetParameters()[0].ParameterType == script.gameEvent.parameter1Type.type && info.GetParameters()[1].ParameterType == script.gameEvent.parameter2Type.type)
+                            {
                                 methods.Add(info);
+                                methodIDs.Add(i);
+                            }
                         }
                     }else if(script.gameEvent.parameter1Type.type != null && script.gameEvent.parameter2Type.type != null && script.gameEvent.parameter3Type.type != null && script.gameEvent.parameter4Type.type == null)
                     {
-                        foreach(MethodInfo info in tempMethods)
+                        for(int i = 0; i < tempMethods.Length; i++)
                         {
+                            MethodInfo info = tempMethods[i];
                             if (info.GetParameters().Length == 3 && info.GetParameters()[0].ParameterType == script.gameEvent.parameter1Type.type && info.GetParameters()[1].ParameterType == script.gameEvent.parameter2Type.type && info.GetParameters()[2].ParameterType == script.gameEvent.parameter3Type.type)
+                            {
                                 methods.Add(info);
+                                methodIDs.Add(i);
+                            }
                         }
                     }
                     else if (script.gameEvent.parameter1Type.type != null && script.gameEvent.parameter2Type.type != null && script.gameEvent.parameter3Type.type != null && script.gameEvent.parameter4Type.type != null)
                     {
-                        foreach (MethodInfo info in tempMethods)
+                        for(int i = 0; i < tempMethods.Length; i++)
                         {
+                            MethodInfo info = tempMethods[i];
                             if (info.GetParameters().Length == 4 && info.GetParameters()[0].ParameterType == script.gameEvent.parameter1Type.type && info.GetParameters()[1].ParameterType == script.gameEvent.parameter2Type.type && info.GetParameters()[2].ParameterType == script.gameEvent.parameter3Type.type && info.GetParameters()[3].ParameterType == script.gameEvent.parameter4Type.type)
+                            {
                                 methods.Add(info);
+                                methodIDs.Add(i);
+                            }
                         }
                     }
                     log += "\nStep 2: Filtering methods for parameter types";
@@ -84,12 +101,7 @@ public class GameEventListenerEditor : Editor
                 {
                     methods.ForEach((MethodInfo m) =>
                     {
-                        log += "\n\t\t" + m.Name + "(";
-                        for (int i = 0; i < m.GetParameters().Length; i++)
-                        {
-                            log += m.GetParameters()[i].ParameterType + " " + m.GetParameters()[i].Name;
-                        }
-                        log += ")";
+                        log += "\n\t\t" + m.Name;
                     });
                     popupOptions = new string[methods.Count+1];
                     popupOptions[0] = "None";
@@ -103,7 +115,11 @@ public class GameEventListenerEditor : Editor
                     script.linkedMethods[index].chosenID = EditorGUI.Popup(
                         new Rect(rect.x + rect.width / 2, rect.y, rect.width / 2, EditorGUIUtility.singleLineHeight),
                         script.linkedMethods[index].chosenID, popupOptions);
-                    for (int i = 0; i < tempMethods.Length; i++)
+
+                    script.linkedMethods[index].gameObject = component.gameObject;
+                    script.linkedMethods[index].methodID = methodIDs[script.linkedMethods[index].chosenID-1];
+                    script.linkedMethods[index].methodName = popupOptions[script.linkedMethods[index].chosenID];
+                    /*for (int i = 0; i < tempMethods.Length; i++)
                     {
                         if (tempMethods[i].Name == popupOptions[script.linkedMethods[index].chosenID])
                         {
@@ -111,7 +127,7 @@ public class GameEventListenerEditor : Editor
                             script.linkedMethods[index].methodID = i;
                             script.linkedMethods[index].methodName = popupOptions[script.linkedMethods[index].chosenID];
                         }
-                    }
+                    }*/
                 }
                 else
                 {
