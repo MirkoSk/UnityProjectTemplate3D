@@ -6,15 +6,30 @@ using UnityEngine.SceneManagement;
 /// <summary>
 /// Provides a Debug Mode Menu
 /// </summary>
-public class DebugMode : Utility.Singleton<DebugMode>
+public class DebugMode : MonoBehaviour
 {
+
+    public static DebugMode Instance;
+
     private bool debugMode = false;
 
 
 
+    //Awake is always called before any Start functions
     private void Awake()
     {
-        RegisterSingleton(this);
+        //Check if instance already exists
+        if (Instance == null)
+
+            //if not, set instance to this
+            Instance = this;
+
+        //If instance already exists and it's not this:
+        else if (Instance != this)
+        { 
+            //Then destroy this. This enforces our singleton pattern, meaning there can only ever be one instance of a DebugMode.
+            Destroy(gameObject);
+        }
     }
 
     private void Update ()
@@ -25,14 +40,6 @@ public class DebugMode : Utility.Singleton<DebugMode>
             debugMode = !debugMode;
         }
     }
-
-
-
-    #region Custom Event Functions
-    // Every child of SubscribedBehaviour can implement these
-    #endregion
-    
-
 
     // Draws the GUI for the Debug Mode and declares it's functionality
     private void OnGUI()

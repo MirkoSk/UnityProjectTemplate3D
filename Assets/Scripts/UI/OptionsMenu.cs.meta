@@ -1,11 +1,16 @@
 fileFormatVersion: 2
 guid: 9b29988e30630904a89e5660913b7eca
-timeCreated: 1514556651
-licenseType: Free
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - resolutionDropdown: {instanceID: 0}
+  - fullscreenToggle: {instanceID: 0}
+  - InvertXToggle: {instanceID: 0}
+  - InvertYToggle: {instanceID: 0}
+  - sensitivitySlider: {instanceID: 0}
+  - backButton: {instanceID: 0}
+  - masterMixer: {fileID: 24100000, guid: 38d6ebe879587a54c8cdf4ba00acd4dc, type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

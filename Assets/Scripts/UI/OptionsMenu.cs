@@ -3,23 +3,30 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Audio;
+using TMPro;
 
 /// <summary>
 /// 
 /// </summary>
-public class OptionsMenu : MonoBehaviour {
+public class OptionsMenu : MonoBehaviour
+{
 
     #region Variable Declarations
-    [SerializeField] TMPro.TMP_Dropdown resolutionDropdown;
-    [SerializeField] Toggle fullscreenToggle;
-    [SerializeField] Button backButton;
+    [SerializeField] TMP_Dropdown resolutionDropdown = null;
+    [SerializeField] Toggle fullscreenToggle = null;
+    [SerializeField] Button backButton = null;
+
+    [Space]
+    [SerializeField] AudioMixer masterMixer = null;
+
     Resolution[] resolutions;
     #endregion
 
 
 
     #region Unity Event Functions
-    private void Start() {
+    private void Start()
+    {
         resolutions = Screen.resolutions;
 
         resolutionDropdown.ClearOptions();
@@ -45,7 +52,8 @@ public class OptionsMenu : MonoBehaviour {
         fullscreenToggle.isOn = Screen.fullScreen;
 	}
 	
-	private void Update() {
+	private void Update()
+    {
         if (Input.GetButtonDown(Constants.INPUT_CANCEL)) {
             backButton.onClick.Invoke();
         }
@@ -70,12 +78,12 @@ public class OptionsMenu : MonoBehaviour {
 
     public void SetMusicVolume(float volume)
     {
-        AudioManager.Instance.SetMusicVolume(volume);
+        masterMixer.SetFloat(Constants.MIXER_MUSIC_VOLUME, volume);
     }
 
     public void SetSFXVolume(float volume)
     {
-        AudioManager.Instance.SetSFXVolume(volume);
+        masterMixer.SetFloat(Constants.MIXER_SFX_VOLUME, volume);
     }
     #endregion
 

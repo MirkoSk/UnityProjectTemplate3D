@@ -5,23 +5,33 @@ using UnityEngine;
 /// <summary>
 /// 
 /// </summary>
-public class MenuAudio : MonoBehaviour {
+[RequireComponent(typeof(AudioSource))]
+public class MenuAudio : MonoBehaviour
+{
 
     #region Variable Declarations
+    [SerializeField] AudioClip menuConfirm = null;
+    [Range(0f, 1f)]
+    [SerializeField] float menuConfirmVolume = 1f;
 
-	#endregion
-	
-	
-	
-	#region Unity Event Functions
-	
+    AudioSource audioSource;
+    #endregion
+
+
+
+    #region Unity Event Functions
+    private void Awake()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
     #endregion
 
 
 
     #region Public Functions
-    public void PlayConfirm() {
-        AudioManager.Instance.PlayMenuConfirm();
+    public void PlayConfirm()
+    {
+        audioSource.PlayOneShot(menuConfirm, menuConfirmVolume);
     }
-	#endregion
+    #endregion
 }
